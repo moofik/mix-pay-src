@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+. $(dirname $0)/script/functions.sh
+
+if [[ -z "$@" ]]; then
+    pg psql -h brainpower-postgresql -U brainpower -d brainpower
+    exit 0
+fi
+
+pg psql "$@"

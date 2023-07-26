@@ -1,0 +1,86 @@
+version: '3'
+
+services:
+  brainpower-nginx:
+    build: build/nginx
+    image: brainpower/nginx
+    container_name: brainpower-nginx
+    volumes:
+     - "./volumes/nginx/log/:/var/log/nginx/"
+     - "./build/nginx/brainpower.local.conf:/etc/nginx/conf.d/default.conf:ro"
+     - "..:/brainpower:ro"
+    ports:
+     - "127.0.0.1:8000:80"
+    networks:
+     - brainpower
+    depends_on:
+     - brainpower-php-fpm
+
+  brainpower-php-fpm:
+    build: build/php-fpm
+    image: brainpower/php-fpm
+    container_name: brainpower-php-fpm
+    volumes:
+     - "..:/brainpower"
+     - "./build/php-fpm/php.ini:/etc/php/8.1/fpm/php.ini:ro"
+     - "./volumes/data:/opt/data"
+    ports:
+     - "127.0.0.1:9009:9000"
+    environment:
+      XDEBUG_CONFIG: >
+        idekey=PHPSTORM
+        remote_enable=1
+        remote_host=172.22.0.1
+        remote_port=9000
+        profiler_enable=0
+        coverage_enable=0
+    networks:
+     - brainpower
+    depends_on:
+     - brainpower-postgresql
+
+  brainpower-php-cli:
+    build: build/php-cli
+    image: brainpower/php-cli
+    container_name: brainpower-php-cli
+    volumes:
+     - "..:/brainpower"
+     - "./build/php-cli/php.ini:/etc/php/8.1/cli/php.ini:ro"
+     - "./volumes/data:/opt/data"
+    ports:
+     - "127.0.0.1:9011:9000"
+     - "127.0.0.1:2222:22"
+    environment:
+      XDEBUG_CONFIG: >
+        idekey=PHPSTORM
+        remote_enable=1
+        remote_host=172.22.0.1
+        remote_port=9000
+        profiler_enable=0
+        coverage_enable=0
+    networks:
+     - brainpower
+    depends_on:
+     - brainpower-postgresql
+     - brainpower-php-fpm
+
+  brainpower-postgresql:
+    build: build/postgresql
+    image: brainpower/db
+    container_name: db
+    environment:
+      POSTGRES_PASSWORD: testpassW0000rdh
+    volumes:
+      - "./volumes/pgdata:/var/lib/postgresql/data"
+      - "./volumes/data:/opt/data"
+    tmpfs:
+      - /run
+      - /tmp
+    ports:
+      - "5432:5432"
+    networks:
+      - brainpower
+
+networks:
+  brainpower:
+    external: true
