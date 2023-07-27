@@ -26,11 +26,13 @@ export default {
     actions: {
         login({commit}, data) {
             axios.defaults.headers.common.Authorization = `${data.token_type} ${data.access_token}`
+            window.localStorage.setItem('token', data.access_token);
+            window.localStorage.setItem('tokenType', data.token_type);
 
             return axios.get('/api/user').then(({data}) => {
                 commit('SET_USER', data)
                 commit('SET_AUTHENTICATED', true)
-                router.push({name: 'dashboard'})
+                router.push({name: 'authorized-payment'})
             }).catch(({response: {data}}) => {
                 commit('SET_USER', {})
                 commit('SET_AUTHENTICATED', false)
@@ -38,6 +40,8 @@ export default {
         },
         loginWithoutRedirect({commit}, data) {
             axios.defaults.headers.common.Authorization = `${data.token_type} ${data.access_token}`
+            window.localStorage.setItem('token', data.access_token);
+            window.localStorage.setItem('tokenType', data.token_type);
 
             return axios.get('/api/user').then(({data}) => {
                 commit('SET_USER', data)

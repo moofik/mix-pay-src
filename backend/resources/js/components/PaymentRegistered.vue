@@ -22,8 +22,6 @@
                           class="step-number">2</span></div>
                       <div class="step" :class="{'step-active' : step === 3, 'step-done': step > 3}"><span
                           class="step-number">3</span></div>
-                      <div v-if="this.firstTime" class="step" :class="{'step-active' : step === 4, 'step-done': step > 4}"><span
-                          class="step-number">4</span></div>
                     </div>
 
                     <div class="col-12" v-if="Object.keys(validationErrors).length > 0">
@@ -65,12 +63,6 @@
                             </option>
                             <option value="WeChat">
                               WeChat
-                            </option>
-                            <option value="QIWI">
-                              QIWI
-                            </option>
-                            <option value="ЮMoney">
-                              ЮMoney
                             </option>
                             <option value="BANGKOK BANK">
                               BANGKOK BANK
@@ -132,52 +124,7 @@
 
 
                     <transition name="slide-fade">
-                      <form v-if="!$store.state.auth.authenticated && this.firstTime && step===2" action="javascript:void(0)" @submit.prevent="next"
-                            class="row col-8 m-auto" method="post">
-                        <h2>Contact information</h2>
-                        <div class="form-outline mb-4">
-                          <input type="phone" name="phone" v-model="user.phone" id="phone" class="form-control"/>
-                          <label class="form-label" for="phone">Phone</label>
-                        </div>
-
-                        <div class="form-outline mb-4">
-                          <input type="email" name="email" v-model="user.email" id="email" class="form-control"
-                                 placeholder="example@mail.com"/>
-                          <label class="form-label" for="email">Email</label>
-                        </div>
-
-                        <div class="form-outline mb-4">
-                          <input type="password" name="password" v-model="user.password" id="password"
-                                 class="form-control"/>
-                          <label class="form-label" for="password">Password</label>
-                        </div>
-
-<!--                        <div class="form-outline mb-4">-->
-<!--                          <input type="password" name="password_confirmation" v-model="user.password_confirmation"-->
-<!--                                 id="password_confirmation"-->
-<!--                                 class="form-control"/>-->
-<!--                          <label class="form-label" for="password_confirmation">Password confirmation</label>-->
-<!--                        </div>-->
-
-                        <div class="text-center pt-1 mb-5 pb-1">
-                          <button type="button" @click="prev" :disabled="processing"
-                                  class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                            {{ processing ? "Please wait" : "Back" }}
-                          </button>
-                          &nbsp;
-                          <button type="submit" :disabled="processing"
-                                  class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                            {{ processing ? "Please wait" : "Next" }}
-                          </button>
-                          &nbsp;
-                          <!--<a class="text-muted" href="#!">Forgot password?</a>-->
-                        </div>
-                      </form>
-                    </transition>
-
-
-                    <transition name="slide-fade">
-                      <form v-show="step===paymentRequisitesStep" action="javascript:void(0)" @submit.prevent="next"
+                      <form v-show="step===2" action="javascript:void(0)" @submit.prevent="next"
                             class="row col-8 m-auto" method="post">
                         <h2>Payment requisites</h2>
                         <div class="form-outline mb-4">
@@ -201,7 +148,7 @@
 
 
                     <transition name="slide-fade">
-                      <form v-show="step===paymentConfirmationStep" action="javascript:void(0)" @submit.prevent="pay"
+                      <form v-show="step===3" action="javascript:void(0)" @submit.prevent="pay"
                             class="row col-8 m-auto" method="post">
                         <h2>Payment confirmation</h2>
                         <strong>Attach a receipt confirming the payment:</strong>
@@ -224,15 +171,12 @@
 
 
                     <transition name="slide-fade">
-                      <div v-show="step===paymentThanksStep">
+                      <div v-show="step===4">
                         <h2>Thanks for the donation!</h2>
-
-                        <div class="text-center pt-1 mb-5 pb-1">
-                          <button :disabled="processing" @click="toAuthorizedPayment"
-                                  class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                            {{ processing ? "Please wait" : "Make another donation" }}
-                          </button>
-                        </div>
+                        <button :disabled="processing" @click="payAgain"
+                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                          {{ processing ? "Please wait" : "Make another donation" }}
+                        </button>
                       </div>
                     </transition>
 
@@ -277,17 +221,9 @@ export default {
       amount: null,
       tokens: null,
       file: null,
-      user: {
-        phone: "",
-        email: "",
-        password: "",
-        password_confirmation: ""
-      },
       validationErrors: {},
       processing: false,
-      paymentCompleted: false,
-      tokenLoadAmount: false,
-      firstTime: true
+      paymentCompleted: false
     }
   },
   methods: {
@@ -295,7 +231,8 @@ export default {
       signIn: 'auth/loginWithoutRedirect',
     }),
 
-    toAuthorizedPayment() {
+    payAgain()
+    {
       this.steps = {}
       this.step = 1
       this.donation_type = null
@@ -307,11 +244,9 @@ export default {
       this.validationErrors = {}
       this.processing = false
       this.paymentCompleted = false
-      this.firstTime = false
     },
 
-    onFileChange(e) {
-      console.log(e.target.files[0]);
+    onFileChange(e){
       this.file = e.target.files[0];
     },
 
@@ -329,8 +264,11 @@ export default {
     },
 
     async pay() {
+      this.step++;
       this.processing = true
       await axios.get('/sanctum/csrf-cookie')
+
+      let url = '/api/payment';
 
       const config = {
         headers: {'content-type': 'multipart/form-data'}
@@ -343,23 +281,16 @@ export default {
       formData.append('payment_method', this.issuer);
       formData.append('payment_amount', this.amount);
 
-      if (!this.$store.state.auth.authenticated && this.firstTime) {
-        formData.append('phone', this.user.phone);
-        formData.append('email', this.user.email);
-        formData.append('password', this.user.password);
-      }
-
-      await axios.post(this.url, formData, config).then(({data}) => {
-        console.log('fuuuu')
+      await axios.post(url, formData, config).then(({data}) => {
         this.validationErrors = {}
 
-        if (!this.$store.state.auth.authenticated && this.firstTime) {
+        if (!this.$store.state.auth.authenticated) {
           this.signIn(data)
           this.paymentCompleted = true;
         }
-      }).catch((data) => {
-        if (data.response.status === 422 && !this.firstTime) {
-          this.validationErrors = data.response.data.errors
+      }).catch(({data}) => {
+        if (data.status === 422) {
+          this.validationErrors = data.data.errors
         } else {
           this.validationErrors = {}
           alert(data.data.message)
@@ -367,10 +298,6 @@ export default {
       }).finally(() => {
         this.processing = false
       })
-
-      if (Object.keys(this.validationErrors).length === 0) {
-        this.step++;
-      }
     }
   },
   watch: {
@@ -389,16 +316,6 @@ export default {
           this.currency = 'THB'
           break;
 
-        case "QIWI":
-        case "ЮMoney":
-        case "SBERBANK":
-        case "TINKOFF":
-        case "СБП":
-        case "QR СБЕР":
-        case "QR СБП":
-          this.currency = 'RUB'
-              break;
-
         case "BTC":
           this.currency = 'BTC'
           break;
@@ -410,41 +327,13 @@ export default {
           break;
 
         default:
-          this.currency = null
+          this.currency = 'RUB'
           break;
       }
     },
   },
   computed: {
-    paymentRequisitesStep: function () {
-      if (this.$store.state.auth.authenticated && !this.firstTime) {
-        return 2;
-      } else {
-        return 3;
-      }
-    },
-    paymentConfirmationStep: function () {
-      if (this.$store.state.auth.authenticated && !this.firstTime) {
-        return 3;
-      } else {
-        return 4;
-      }
-    },
-    paymentThanksStep: function () {
-      if (this.$store.state.auth.authenticated && !this.firstTime) {
-        return 4;
-      } else {
-        return 5;
-      }
-    },
-    url: function () {
-      if (this.$store.state.auth.authenticated && !this.firstTime) {
-        return '/api/payment';
-      } else {
-        return '/api/payment-register';
-      }
-    },
-    requisitesProps: function () {
+    requisitesProps: function() {
       let qrAssetDemo = this.asset('images/1.png')
 
       switch (this.issuer) {
@@ -505,10 +394,6 @@ export default {
     }
   },
   created() {
-    if (this.$store.state.auth.authenticated) {
-      this.firstTime = false
-    }
-
     this.debouncedFetch = debounce(async (newValue, oldValue) => {
       let url = `/api/convert?amount=${this.amount}&from=${this.currency}&type=${this.donation_type}`;
 

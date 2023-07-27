@@ -24,6 +24,7 @@ Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/payment-register', [\App\Http\Controllers\PaymentController::class, 'payAndRegister']);
-Route::post('/payment', [\App\Http\Controllers\PaymentController::class, 'pay']);
+Route::post('/payment', [\App\Http\Controllers\PaymentController::class, 'pay'])
+    ->middleware('auth:sanctum');
 
 Route::get('/convert', [\App\Http\Controllers\CurrencyController::class, 'convert']);

@@ -6,6 +6,7 @@ import store from '@/store'
 const Login = () => import('@/components/Login.vue')
 const Register = () => import('@/components/Register.vue')
 const Payment = () => import('@/components/Payment.vue');
+const PaymentRegistered = () => import('@/components/PaymentRegistered.vue');
 /* Guest Component */
 
 /* Layouts */
@@ -41,10 +42,10 @@ const routes = [
         path: "/payment",
         component: Payment,
         meta: {
-            middleware: "guest",
             title: `Payment`
         }
     },
+
     {
         path: "/",
         component: DahboardLayout,
@@ -70,21 +71,5 @@ const router = createRouter({
     routes, // short for `routes: routes`
 })
 
-router.beforeEach((to, from, next) => {
-    document.title = to.meta.title
-    if (to.meta.middleware == "guest") {
-        if (store.state.auth.authenticated) {
-            next({ name: "dashboard" })
-        } else {
-            next()
-        }
-    } else {
-        if (store.state.auth.authenticated) {
-            next()
-        } else {
-            next({ name: "login" })
-        }
-    }
-})
 
 export default router

@@ -4,7 +4,7 @@
     <p v-if="name"><span class="arrow-highlight">Payee's name:</span> {{name}}</p>
   </div>
   <div v-if="reqimage">
-    <img src="{{reqimage}}" alt="payment requisites"/>
+    <img style="width: 100%" :src="reqimage" alt="payment requisites"/>
   </div>
 </template>
 
@@ -16,23 +16,23 @@ export default {
   name: "Requisites",
   components: {Requisites},
   props: {
-    'number': {
+    number: {
       type: String,
-      required: false
+      required: false,
+      default: null
     },
 
-    'name': {
+    name: {
       type: String,
-      required: false
+      required: false,
+      default: null
     },
 
-    'reqimage': {
+    reqimage: {
       type: String,
-      required: false
-    },
-  },
-  data() {
-    return {}
+      required: false,
+      default: null
+    }
   }
 }
 </script>
