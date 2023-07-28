@@ -646,7 +646,7 @@ export default {
 
 
 .widget-logo {
-  width: 12%;
+  width: 15%;
 }
 
 .usual-logo {
@@ -664,10 +664,21 @@ export default {
   margin-bottom: 3em;
 }
 
-@media (min-width: 768px) {
-  //.gradient-form {
-  //  height: 100vh !important;
-  //}
+@media (min-width: 300px) and (max-width: 499px) {
+  .logo .text-logo {
+    font-size: 0.8em;
+  }
+}
+
+@media (min-width: 500px) {
+  .logo .text-logo {
+    margin-bottom: 2em;
+    margin-top: -1.5em;
+  }
+
+  .logo .text-logo.mini-margin-top {
+    font-size: 1em !important;
+  }
 }
 
 @media (min-width: 769px) {
@@ -694,13 +705,10 @@ $color-jungle: #193805;
 $font-montserrat: "Montserrat", sans-serif;
 $font-weight-bold: 700;
 
-.logo .text-logo {
-  margin-top: -1.5em;
-  margin-bottom: 2em;
-}
 
 .logo .text-logo.mini-margin-top {
-  margin-top: -1em;
+  margin-top: -0.2em;
+  font-size: 0.5em;
 }
 
 .payment-info {
