@@ -5,7 +5,7 @@
         <div class="col-xl-10">
           <div :class="{'card': !isWidget, 'rounded-3': true, 'text-black': true}">
             <div class="text-end me-4">
-              <a href="http://t.me/Sfike" class="btn btn-primary btn-block fa-lg me-2 gradient-custom-2">SUPPORT</a>
+              <a href="https://t.me/MIXPAY_SUPPORT" class="btn btn-primary btn-block fa-lg me-2 gradient-custom-2">SUPPORT</a>
               <button v-if="$store.state.auth.authenticated" class="btn btn-primary btn-block fa-lg gradient-custom-2"
                       @click="logout">LOGOUT
               </button>
@@ -128,17 +128,26 @@
                             <option value="" disabled>
                               Bank transfer (Turkey):
                             </option>
-                            <option value="Ziraat Bank">
-                              Ziraat Bank TRY/USD/EUR
+                            <option value="Ziraat Bank (TRY)">
+                              Ziraat Bank (TRY)
+                            </option>
+                            <option value="Ziraat Bank (USD)">
+                              Ziraat Bank (USD)
+                            </option>
+                            <option value="Ziraat Bank (EUR)">
+                              Ziraat Bank (EUR)
                             </option>
 
                             <option value="" disabled>
                               Bank transfer (Indonesia):
                             </option>
-                            <option value="MayBank">
-                              MayBank
+                            <option value="MayBank (USD)">
+                              MayBank (USD)
                             </option>
-
+                            <option value="MayBank (IDR)">
+                              MayBank (IDR)
+                            </option>
+<!--
                             <option value="" disabled>
                               Payment services (Thailand):
                             </option>
@@ -151,7 +160,7 @@
                             </option>
                             <option value="ЮMoney">
                               ЮMoney
-                            </option>
+                            </option>-->
 
                             <option value="" disabled>
                               Payment services (World):
@@ -557,53 +566,165 @@ export default {
       let qrAssetDemo = this.asset('images/1.png')
 
       switch (this.issuer) {
-        case "Line":
+        case "Kasikorn Bank":
           return {
-            number: '123',
-            name: 'MR. Line'
+            number: '161-8-74206-3',
+            name: 'CRYSTAL X CO., LTD.'
           }
 
-        case "WeChat":
+        case "True Wallet":
           return {
-            number: '123',
-            name: 'MR. We chat'
+            number: '161-8-74206-3',
+            name: 'CRYSTAL X CO., LTD.'
           }
 
-        case "BANGKOK BANK":
+        case "Sberbank":
           return {
-            number: '676-0-363298',
-            name: ' MR. Pavel Tikhonov'
+            number: '2202-2036-6197-5724',
+            name: 'Иван Васильевич Д.'
           }
 
-        case "KASIKORN BANK":
+        case "Tinkoff Bank":
           return {
-            number: '146-8-52538-7',
-            name: 'ALEKSANDR DUSHENKIN'
+            number: '2200-3001-0026-6285',
+            name: 'Иван Васильевич Д.'
           }
 
-        case "QR BANGKOK BANK":
+        case "Raiffeisen Bank":
           return {
-            reqimage: qrAssetDemo
+            number: '2200-3001-0026-6285',
+            name: 'Иван Васильевич Д.'
           }
 
-        case "QR KASIKORN":
+        case "RSHB":
           return {
-            reqimage: qrAssetDemo
+            number: '6234-4620-0496-7615',
+            name: 'Антон Олегович Г.'
           }
 
-        case "BTC":
+        case "BKS":
+          return {
+            number: '2203-6203-2094-5609',
+            name: 'Антон Олегович Г.'
+          }
+
+        case "SBP":
+          return {
+            number: '+79677966642 Система быстрых платежей (Тинькофф)',
+            name: 'Елена Александровна Г.'
+          }
+
+        case "ЮMoney":
+          return {
+            number: '0x5ff12b5b19168ef4c06cabda2dca0bd3bb426148',
+            name: 'Елена Александровна Г.'
+          }
+
+        case "Jusan Bank":
+          return {
+            number: '5395-4515-0779-8087',
+            name: 'ANTON GIRENKO'
+          }
+
+        case "Halyk Bank":
+          return {
+            number: '5522-0433-4789-3339',
+            name: 'ANTON GIRENKO'
+          }
+
+        case "Kaspi.kz":
+          return {
+            number: '4400-4302-3150-3027',
+            name: 'ANTON GIRENKO'
+          }
+
+        case "BCC.KZ":
+          return {
+            number: '4628-1888-8673-4679',
+            name: 'ANTON GIRENKO'
+          }
+
+        case "Bereke Bank":
+          return {
+            number: '4263-4333-4563-2738',
+            name: 'ANTON GIRENKO'
+          }
+
+        case "Ziraat Bank (TRY)":
+          return {
+            number: 'TR03 0001 0090 1040 7797 2050 01',
+            name: 'Pavel Tikhonov'
+          }
+
+        case "Ziraat Bank (USD)":
+          return {
+            number: 'TR73 0001 0090 1040 7797 2050 02',
+            name: 'Pavel Tikhonov'
+          }
+
+        case "Ziraat Bank (EUR)":
+          return {
+            number: 'TR46 0001 0090 1040 7797 2050 03',
+            name: 'Pavel Tikhonov'
+          }
+
+        case "MayBank (USD)":
+          return {
+            number: '5104-8111-0723-3797',
+            name: 'ANTON GIRENKO'
+          }
+
+        case "MayBank (IDR)":
+          return {
+            number: '5104-8131-0255-9432',
+            name: 'ANTON GIRENKO'
+          }
+
+        case "BNB":
+          return {
+            number: '9112-3980-1040-9153',
+            name: 'MAKSIM SABLIN'
+          }
+
+        case "EGRIP":
+          return {
+            number: '3001909330011728/9153',
+            name: 'BY44BLNB30143001909330011728'
+          }
+
+        case "Binance Pay":
+          return {
+            number: 'ID: 21552799'
+          }
+
+        case "Bitcoin":
           return {
             number: '15buBy2NmK1aVaq5dgA5a7tXFicqRw7E91'
           }
 
-        case "ETH":
+        case "Ethereum ERC20":
+          return {
+            number: 'x5ff12b5b19168ef4c06cabda2dca0bd3bb426148'
+          }
+
+        case "Telegram Wallet":
+          return {
+            number: '@mixpay_support'
+          }
+
+        case "USDT Tether BEP20":
           return {
             number: '0x5ff12b5b19168ef4c06cabda2dca0bd3bb426148'
           }
 
-        case "USDT":
+        case "USDT Tether TRC20":
           return {
             number: 'TRHt4mxa39BwzgmwdBjS7hCqaF67JWqptA'
+          }
+
+        case "USDT Tether ERC20":
+          return {
+            number: '0x80079a4937e2b89e564030d3a9aaf87ae14d1996'
           }
 
         default:
