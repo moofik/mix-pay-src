@@ -4,7 +4,6 @@
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-xl-10">
           <div :class="{'card': !isWidget, 'rounded-3': true, 'text-black': true}">
-
             <div class="text-end me-4">
               <a href="http://t.me/Sfike" class="btn btn-primary btn-block fa-lg me-2 gradient-custom-2">SUPPORT</a>
               <button v-if="$store.state.auth.authenticated" class="btn btn-primary btn-block fa-lg gradient-custom-2"
@@ -18,12 +17,12 @@
 
                   <div class="logo text-center">
                     <img :src="asset('images/logo.png')"
-                         style="width: 24%;" alt="logo">
+                         :class="{'widget-logo': isWidget, 'usual-logo': !isWidget}" alt="logo">
                     <!--<h4 class="mt-1 mb-5 pb-1">Payment</h4>-->
-                    <div class="text-logo">PAYMENT SYSTEMS</div>
+                    <div :class="{'text-logo': true, 'mini-margin-top': isWidget}">PAYMENT SYSTEMS</div>
                   </div>
 
-                  <p v-if="step===1" class="p-4 donation-description">
+                  <p v-if="step===1" :class="{'p-4': !isWidget, 'p-1': isWidget, 'donation-description': true}">
                     The support of our tournament will help to attract more attention to the problems of people
                     with disabilities and will contribute to their integration into society.
                   </p>
@@ -645,6 +644,15 @@ export default {
   background: linear-gradient(to right, #DD7C45, #DD7C45, #D76546, #D76546);
 }
 
+
+.widget-logo {
+  width: 12%;
+}
+
+.usual-logo {
+  width: 24%;
+}
+
 .btn.btn-primary {
   margin-top: 1em;
   border: 2px solid black;
@@ -689,6 +697,10 @@ $font-weight-bold: 700;
 .logo .text-logo {
   margin-top: -1.5em;
   margin-bottom: 2em;
+}
+
+.logo .text-logo.mini-margin-top {
+  margin-top: -1em;
 }
 
 .payment-info {

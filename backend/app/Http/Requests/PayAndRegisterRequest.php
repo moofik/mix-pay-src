@@ -23,10 +23,9 @@ class PayAndRegisterRequest extends FormRequest
     {
         return [
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-            'currency' => 'required',
-            'donation_type' => 'required',
+            'password' => 'required|string|min:6',
             'payment_amount' => 'required',
+            'currency' => 'string',
             'payment_method' => 'required',
             'file' => 'mimes:jpg,png,pdf,gif,jpeg,gif,bmp'
         ];

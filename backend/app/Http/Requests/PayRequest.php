@@ -22,9 +22,8 @@ class PayRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'currency' => 'required',
-            'donation_type' => 'required',
             'payment_amount' => 'required',
+            'currency' => 'string',
             'payment_method' => 'required',
             'file' => 'mimes:jpg,png,pdf,gif,jpeg,gif,bmp'
         ];
