@@ -1,5 +1,5 @@
 <template>
-  <div v-if="number">
+  <div class="donation-requisites" v-if="number">
     <p><span>Account number:</span> {{number}}</p>
     <p v-if="name"><span>Payee's name:</span> {{name}}</p>
   </div>
@@ -75,5 +75,11 @@ p {
   border-left-color: transparent;
   transform: rotate(180deg);
   transform-origin: center right;
+}
+
+@media (min-width: 300px) and (max-width: 500px) {
+  .donation-requisites p {
+    font-size: 1.3em;
+  }
 }
 </style>
