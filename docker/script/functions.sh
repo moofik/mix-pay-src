@@ -45,7 +45,7 @@ pg() {
         -v ${DIR}:${PROJECT_DIR} \
         -w ${work_dir} \
         -e POSTGRES_PASSWORD=testpassW0000rdh \
-        --network   brainpower \
-          brainpower/postgresql \
+        --network brainpower \
+          brainpower/db \
         "$@"
 }

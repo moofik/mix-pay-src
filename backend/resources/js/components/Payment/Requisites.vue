@@ -1,7 +1,7 @@
 <template>
   <div v-if="number">
-    <p><span class="arrow-highlight">Requisites:</span> {{number}}</p>
-    <p v-if="name"><span class="arrow-highlight">Payee's name:</span> {{name}}</p>
+    <p><span>Account number:</span> {{number}}</p>
+    <p v-if="name"><span>Payee's name:</span> {{name}}</p>
   </div>
   <div v-if="reqimage">
     <img style="width: 100%" :src="reqimage" alt="payment requisites"/>

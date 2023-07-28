@@ -4,16 +4,22 @@
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-xl-10">
           <div class="card rounded-3 text-black">
+
+            <div class="text-end me-4">
+              <a href="http://t.me/Sfike" class="btn btn-primary btn-block fa-lg me-2 gradient-custom-2">SUPPORT</a>
+              <button v-if="$store.state.auth.authenticated" class="btn btn-primary btn-block fa-lg gradient-custom-2" @click="logout">LOGOUT</button>
+            </div>
+
             <div class="row g-0">
               <div class="col-lg-12">
                 <div class="card-body p-md-5 mx-md-4">
 
-                  <div class="text-center">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
-                         style="width: 185px;" alt="logo">
+                  <div class="logo text-center">
+                    <img :src="asset('images/logo.png')"
+                         style="width: 24%;" alt="logo">
                     <!--<h4 class="mt-1 mb-5 pb-1">Payment</h4>-->
+                    <div class="text-logo">PAYMENT SYSTEMS</div>
                   </div>
-
                   <section class="section-form">
                     <div class="section-form-stepper">
                       <div class="step" :class="{'step-active' : step === 1, 'step-done': step > 1}"><span
@@ -38,24 +44,23 @@
                       <form v-show="step===1" action="javascript:void(0)" @submit.prevent="next"
                             class="row col-8 m-auto" method="post">
                         <h2>Payment details</h2>
-
+                        <p class="donation-description">
+                          The support of our tournament will help to attract more attention to the problems of people
+                          with disabilities and will contribute to their integration into society.
+                        </p>
                         <div class="form-outline mb-4">
                           <label for="donation_type" class="col-sm-12 control-label">Select donation type</label>
-                          <select name="donation_type" id="donation_type"
+                          <select required name="donation_type" id="donation_type"
                                   class="form-select" v-model.number="donation_type">
-                            <option selected disabled value="">Donation type</option>
-                            <option value="1">
+                            <option selected disabled value="1">
                               Basketball championship among the disabled people
-                            </option>
-                            <option value="2">
-                              Dobrosite tokens presale
                             </option>
                           </select>
                         </div>
 
                         <div class="form-outline mb-4">
                           <label for="issuer" class="col-sm-12 control-label">Select payment method</label>
-                          <select name="issuer" id="issuer"
+                          <select required name="issuer" id="issuer"
                                   class="form-select" v-model="issuer">
                             <option value="" selected disabled>
                               Payment method
@@ -71,6 +76,9 @@
                             </option>
                             <option value="ЮMoney">
                               ЮMoney
+                            </option>
+                            <option value="" disabled>
+                              Банковские платежи РФ:
                             </option>
                             <option value="BANGKOK BANK">
                               BANGKOK BANK
@@ -116,10 +124,19 @@
                           <input type="number" name="amount" v-model.number="amount" id="amount" class="form-control"/>
                         </div>
 
-                        <h4 v-show="tokens !== null">YOU WILL GET {{ this.tokens }} TOKENS</h4>
+                        <div v-show="loadTokenAmount" class="wrapper">
+                          <div class="loading-text"> <!--Loading-text-->
+                            <h4>Calculating how many tokens you will receive
+                              <span class="dot-one"> .</span>
+                              <span class="dot-two"> .</span>
+                              <span class="dot-three"> .</span>
+                            </h4>
+                          </div> <!--/Loading-text-->
+                        </div> <!-- /Wrapper -->
+                        <h4 class="tokens-amt" v-show="tokens !== null && !loadTokenAmount">You will get {{ this.tokens }} tokens</h4>
 
                         <div class="text-center pt-1 mb-5 pb-1">
-                          <button v-show="tokens !== null" type="submit" :disabled="processing"
+                          <button v-show="tokens !== null && !loadTokenAmount" type="submit" :disabled="processing"
                                   class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
                             {{ processing ? "Please wait" : "Next" }}
                           </button>
@@ -136,18 +153,18 @@
                             class="row col-8 m-auto" method="post">
                         <h2>Contact information</h2>
                         <div class="form-outline mb-4">
-                          <input type="phone" name="phone" v-model="user.phone" id="phone" class="form-control"/>
+                          <input required type="phone" name="phone" v-model="user.phone" id="phone" class="form-control"/>
                           <label class="form-label" for="phone">Phone</label>
                         </div>
 
                         <div class="form-outline mb-4">
-                          <input type="email" name="email" v-model="user.email" id="email" class="form-control"
+                          <input required type="email" name="email" v-model="user.email" id="email" class="form-control"
                                  placeholder="example@mail.com"/>
                           <label class="form-label" for="email">Email</label>
                         </div>
 
                         <div class="form-outline mb-4">
-                          <input type="password" name="password" v-model="user.password" id="password"
+                          <input required type="password" name="password" v-model="user.password" id="password"
                                  class="form-control"/>
                           <label class="form-label" for="password">Password</label>
                         </div>
@@ -201,11 +218,11 @@
 
 
                     <transition name="slide-fade">
-                      <form v-show="step===paymentConfirmationStep" action="javascript:void(0)" @submit.prevent="pay"
+                      <form ref="addImageForm" v-show="step===paymentConfirmationStep" action="javascript:void(0)" @submit.prevent="pay"
                             class="row col-8 m-auto" method="post">
                         <h2>Payment confirmation</h2>
                         <strong>Attach a receipt confirming the payment:</strong>
-                        <input type="file" class="form-control" v-on:change="onFileChange"/>
+                        <input required type="file" ref="fileupload" class="form-control" v-on:change="onFileChange"/>
 
                         <div class="text-center pt-1 mb-5 pb-1">
                           <button type="button" @click="prev" :disabled="processing"
@@ -271,7 +288,7 @@ export default {
     return {
       steps: {},
       step: 1,
-      donation_type: null,
+      donation_type: 1,
       currency: null,
       issuer: null,
       amount: null,
@@ -286,19 +303,27 @@ export default {
       validationErrors: {},
       processing: false,
       paymentCompleted: false,
-      tokenLoadAmount: false,
+      loadTokenAmount: false,
       firstTime: true
     }
   },
   methods: {
     ...mapActions({
       signIn: 'auth/loginWithoutRedirect',
+      signOut: "auth/logout"
     }),
+
+    async logout() {
+      await axios.post('/api/logout').then(({data}) => {
+        this.signOut()
+        this.toAuthorizedPayment()
+        this.firstTime = true
+      })
+    },
 
     toAuthorizedPayment() {
       this.steps = {}
       this.step = 1
-      this.donation_type = null
       this.currency = null
       this.issuer = null
       this.amount = null
@@ -308,10 +333,12 @@ export default {
       this.processing = false
       this.paymentCompleted = false
       this.firstTime = false
+      this.loadTokenAmount = false
+      this.$refs.addImageForm.reset()
+      this.$refs.fileupload.value = null
     },
 
     onFileChange(e) {
-      console.log(e.target.files[0]);
       this.file = e.target.files[0];
     },
 
@@ -375,7 +402,10 @@ export default {
   },
   watch: {
     async amount(newValue, oldValue) {
-      this.loadTokenAmount = true;
+      if (this.amount !== null) {
+        this.loadTokenAmount = true;
+      }
+
       this.debouncedFetch(newValue, oldValue);
     },
     issuer(newValue, oldValue) {
@@ -535,10 +565,21 @@ export default {
   background: #fccb90;
 
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #e20c0c);
+  background: -webkit-linear-gradient(to right, #DD7C45, #DD7C45, #D76546, #D76546);
 
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #d81212);
+  background: linear-gradient(to right, #DD7C45, #DD7C45, #D76546, #D76546);
+}
+
+.btn.btn-primary {
+  margin-top: 1em;
+  border: 2px solid black;
+}
+
+.donation-description {
+  font-weight: 700;
+  margin-top: 1em;
+  margin-bottom: 3em;
 }
 
 @media (min-width: 768px) {
@@ -570,6 +611,11 @@ $color-jungle: #193805;
 /* FONT */
 $font-montserrat: "Montserrat", sans-serif;
 $font-weight-bold: 700;
+
+.logo .text-logo {
+  margin-top: -1.5em;
+  margin-bottom: 2em;
+}
 
 .payment-info {
   width: 600px;
@@ -684,5 +730,64 @@ $font-weight-bold: 700;
   }
 }
 
+.tokens-amt, h4.loading {
+  font-size: 1.5em !important;
+}
 
+span[class^="dot-"]{
+  opacity: 0;
+}
+.dot-one{
+  animation: dot-one 2s infinite linear
+}
+.dot-two{
+  animation: dot-two 2s infinite linear
+}
+.dot-three{
+  animation: dot-three 2s infinite linear
+}
+@keyframes dot-one{
+  0%{
+    opacity: 0;
+  }
+  15%{
+    opacity: 0;
+  }
+  25%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+@keyframes dot-two{
+  0%{
+    opacity: 0;
+  }
+  25%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+@keyframes dot-three{
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 0;
+  }
+  75%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 1;
+  }
+}
 </style>

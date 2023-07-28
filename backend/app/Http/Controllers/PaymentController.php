@@ -32,7 +32,7 @@ class PaymentController extends Controller
 
                 if ($request->file()) {
                     $fileName = time() . '_' . $request->file('file')?->getClientOriginalName();
-                    $filePath = $request->file('file')?->storeAs(public_path('uploads'), $fileName, 'public');
+                    $filePath = $request->file('file')?->storeAs(storage_path('uploads'), $fileName, 'public');
                     $data['attachment'] = $filePath;
                 }
 

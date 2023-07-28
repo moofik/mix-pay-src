@@ -39,29 +39,11 @@ const routes = [
     },
     {
         name: "payment",
-        path: "/payment",
+        path: "/",
         component: Payment,
         meta: {
             title: `Payment`
         }
-    },
-
-    {
-        path: "/",
-        component: DahboardLayout,
-        meta: {
-            middleware: "auth"
-        },
-        children: [
-            {
-                name: "dashboard",
-                path: '/',
-                component: Dashboard,
-                meta: {
-                    title: `Dashboard`
-                }
-            }
-        ]
     }
 ]
 
