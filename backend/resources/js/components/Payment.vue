@@ -7,7 +7,9 @@
 
             <div class="text-end me-4">
               <a href="http://t.me/Sfike" class="btn btn-primary btn-block fa-lg me-2 gradient-custom-2">SUPPORT</a>
-              <button v-if="$store.state.auth.authenticated" class="btn btn-primary btn-block fa-lg gradient-custom-2" @click="logout">LOGOUT</button>
+              <button v-if="$store.state.auth.authenticated" class="btn btn-primary btn-block fa-lg gradient-custom-2"
+                      @click="logout">LOGOUT
+              </button>
             </div>
 
             <div class="row g-0">
@@ -34,7 +36,8 @@
                           class="step-number">2</span></div>
                       <div class="step" :class="{'step-active' : step === 3, 'step-done': step > 3}"><span
                           class="step-number">3</span></div>
-                      <div v-if="this.firstTime" class="step" :class="{'step-active' : step === 4, 'step-done': step > 4}"><span
+                      <div v-if="this.firstTime" class="step"
+                           :class="{'step-active' : step === 4, 'step-done': step > 4}"><span
                           class="step-number">4</span></div>
                     </div>
 
@@ -201,11 +204,13 @@
 
 
                     <transition name="slide-fade">
-                      <form v-if="!$store.state.auth.authenticated && this.firstTime && step===2" action="javascript:void(0)" @submit.prevent="next"
+                      <form v-if="!$store.state.auth.authenticated && this.firstTime && step===2"
+                            action="javascript:void(0)" @submit.prevent="next"
                             class="row col-8 m-auto" method="post">
                         <h2>Contact information</h2>
                         <div class="form-outline mb-4">
-                          <input required type="phone" name="phone" v-model="user.phone" id="phone" class="form-control"/>
+                          <input required type="phone" name="phone" v-model="user.phone" id="phone"
+                                 class="form-control"/>
                           <label class="form-label" for="phone">Phone</label>
                         </div>
 
@@ -221,12 +226,12 @@
                           <label class="form-label" for="password">Password</label>
                         </div>
 
-<!--                        <div class="form-outline mb-4">-->
-<!--                          <input type="password" name="password_confirmation" v-model="user.password_confirmation"-->
-<!--                                 id="password_confirmation"-->
-<!--                                 class="form-control"/>-->
-<!--                          <label class="form-label" for="password_confirmation">Password confirmation</label>-->
-<!--                        </div>-->
+                        <!--                        <div class="form-outline mb-4">-->
+                        <!--                          <input type="password" name="password_confirmation" v-model="user.password_confirmation"-->
+                        <!--                                 id="password_confirmation"-->
+                        <!--                                 class="form-control"/>-->
+                        <!--                          <label class="form-label" for="password_confirmation">Password confirmation</label>-->
+                        <!--                        </div>-->
 
                         <div class="text-center pt-1 mb-5 pb-1">
                           <button type="button" @click="prev" :disabled="processing"
@@ -250,7 +255,7 @@
                             class="row col-8 m-auto" method="post">
                         <h2>Payment requisites</h2>
                         <p class="pt-1 donation-description">
-                          Open the mobile banking or payment system application. Transfer {{amount}} {{currency}}
+                          Open the mobile banking or payment system application. Transfer {{ amount }} {{ currency }}
                           to the following payment details:
                         </p>
                         <div class="text-center form-outline mb-2">
@@ -280,7 +285,8 @@
 
 
                     <transition name="slide-fade">
-                      <form ref="addImageForm" v-show="step===paymentConfirmationStep" action="javascript:void(0)" @submit.prevent="pay"
+                      <form ref="addImageForm" v-show="step===paymentConfirmationStep" action="javascript:void(0)"
+                            @submit.prevent="pay"
                             class="row col-8 m-auto" method="post">
                         <h2>Payment confirmation</h2>
                         <strong>Attach a receipt confirming the payment:</strong>
@@ -424,10 +430,12 @@ export default {
 
       let formData = new FormData();
       formData.append('file', this.file);
-      formData.append('donation_type', this.donation_type);
-      formData.append('currency', this.currency);
       formData.append('payment_method', this.issuer);
       formData.append('payment_amount', this.amount);
+
+      if (this.currency) {
+        formData.append('currency', this.currency);
+      }
 
       if (!this.$store.state.auth.authenticated && this.firstTime) {
         formData.append('phone', this.user.phone);
@@ -436,7 +444,6 @@ export default {
       }
 
       await axios.post(this.url, formData, config).then(({data}) => {
-        console.log('fuuuu')
         this.validationErrors = {}
 
         if (!this.$store.state.auth.authenticated && this.firstTime) {
@@ -462,38 +469,59 @@ export default {
   watch: {
     issuer(newValue, oldValue) {
       switch (newValue) {
-        case "Line":
-        case "WeChat":
-        case "BANGKOK BANK":
-        case "KASIKORN BANK":
-        case "QR BANGKOK BANK":
-        case "QR KASIKORN":
+        case "Kasikorn Bank":
+        case "True Wallet":
           this.currency = 'THB'
-          break;
+          break
 
-        case "QIWI":
+        case "Sberbank":
+        case "Tinkoff Bank":
+        case "Raiffeisen Bank":
+        case "RSHB":
+        case "BKS":
+        case "SBP":
         case "ЮMoney":
-        case "SBERBANK":
-        case "TINKOFF":
-        case "СБП":
-        case "QR СБЕР":
-        case "QR СБП":
           this.currency = 'RUB'
-              break;
+          break
 
-        case "BTC":
+        case "Jusan Bank":
+        case "Halyk Bank":
+        case "Kaspi.kz":
+        case "BCC.KZ":
+        case "Bereke Bank":
+          this.currency = 'KZT'
+          break
+
+        case "BNB":
+        case "EGRIP":
+          this.currency = 'BYN'
+          break
+
+        case "Ziraat Bank":
+          this.currency = 'TRY'
+          break
+
+        case "MayBank":
+          this.currency = 'IDR'
+          break
+
+        case "Bitcoin":
           this.currency = 'BTC'
-          break;
-        case "ETH":
+          break
+
+        case "Ethereum ERC20":
           this.currency = 'ETH'
-          break;
-        case "USDT":
+          break
+
+        case "USDT Tether BEP20":
+        case "USDT Tether TRC20":
+        case "USDT Tether ERC20":
           this.currency = 'USDT'
-          break;
+          break
 
         default:
           this.currency = null
-          break;
+          break
       }
     },
   },
@@ -780,59 +808,63 @@ $font-weight-bold: 700;
   font-size: 1.5em !important;
 }
 
-span[class^="dot-"]{
+span[class^="dot-"] {
   opacity: 0;
 }
-.dot-one{
+
+.dot-one {
   animation: dot-one 2s infinite linear
 }
-.dot-two{
+
+.dot-two {
   animation: dot-two 2s infinite linear
 }
-.dot-three{
+
+.dot-three {
   animation: dot-three 2s infinite linear
 }
-@keyframes dot-one{
-  0%{
+
+@keyframes dot-one {
+  0% {
     opacity: 0;
   }
-  15%{
+  15% {
     opacity: 0;
   }
-  25%{
+  25% {
     opacity: 1;
   }
-  100%{
+  100% {
     opacity: 1;
   }
 }
 
-@keyframes dot-two{
-  0%{
+@keyframes dot-two {
+  0% {
     opacity: 0;
   }
-  25%{
+  25% {
     opacity: 0;
   }
-  50%{
+  50% {
     opacity: 1;
   }
-  100%{
+  100% {
     opacity: 1;
   }
 }
 
-@keyframes dot-three{
-  0%{
+@keyframes dot-three {
+  0% {
     opacity: 0;
   }
-  50%{
+  50% {
     opacity: 0;
   }
-  75%{
+  75% {
     opacity: 1;
   }
-  100%{
+  100% {
     opacity: 1;
   }
 }
