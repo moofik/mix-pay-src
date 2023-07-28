@@ -4,7 +4,7 @@
     <p v-if="name"><span>Payee's name:</span> {{name}}</p>
   </div>
   <div v-if="reqimage">
-    <img style="width: 100%" :src="reqimage" alt="payment requisites"/>
+    <img style="width: 80%" :src="reqimage" alt="payment requisites"/>
   </div>
 </template>
 

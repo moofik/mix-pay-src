@@ -3,7 +3,7 @@
     <div class="container-md py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-xl-10">
-          <div class="card rounded-3 text-black">
+          <div :class="{'card': !isWidget, 'rounded-3': true, 'text-black': true}">
 
             <div class="text-end me-4">
               <a href="http://t.me/Sfike" class="btn btn-primary btn-block fa-lg me-2 gradient-custom-2">SUPPORT</a>
@@ -20,6 +20,12 @@
                     <!--<h4 class="mt-1 mb-5 pb-1">Payment</h4>-->
                     <div class="text-logo">PAYMENT SYSTEMS</div>
                   </div>
+
+                  <p v-if="step===1" class="p-4 donation-description">
+                    The support of our tournament will help to attract more attention to the problems of people
+                    with disabilities and will contribute to their integration into society.
+                  </p>
+
                   <section class="section-form">
                     <div class="section-form-stepper">
                       <div class="step" :class="{'step-active' : step === 1, 'step-done': step > 1}"><span
@@ -44,10 +50,6 @@
                       <form v-show="step===1" action="javascript:void(0)" @submit.prevent="next"
                             class="row col-8 m-auto" method="post">
                         <h2>Payment details</h2>
-                        <p class="donation-description">
-                          The support of our tournament will help to attract more attention to the problems of people
-                          with disabilities and will contribute to their integration into society.
-                        </p>
                         <div class="form-outline mb-4">
                           <label for="donation_type" class="col-sm-12 control-label">Select donation type</label>
                           <select required name="donation_type" id="donation_type"
@@ -63,87 +65,137 @@
                           <select required name="issuer" id="issuer"
                                   class="form-select" v-model="issuer">
                             <option value="" selected disabled>
-                              Payment method
+                              Bank transfer (Thailand):
                             </option>
-                            <option value="Line">
-                              Line
+
+                            <option value="Kasikorn Bank">
+                              Kasikorn Bank
                             </option>
-                            <option value="WeChat">
-                              WeChat
+
+                            <option value="" disabled>
+                              Bank transfer (Russia):
                             </option>
-                            <option value="QIWI">
-                              QIWI
+                            <option value="Sberbank">
+                              Sberbank
+                            </option>
+                            <option value="Tinkoff Bank">
+                              Tinkoff Bank
+                            </option>
+                            <option value="Raiffeisen Bank">
+                              Raiffeisen Bank
+                            </option>
+                            <option value="RSHB">
+                              RSHB
+                            </option>
+                            <option value="BKS">
+                              BKS
+                            </option>
+                            <option value="SBP">
+                              SBP System Fast Payas
+                            </option>
+
+                            <option value="" disabled>
+                              Bank transfer (Kazakhstan):
+                            </option>
+                            <option value="Jusan Bank">
+                              Jusan Bank
+                            </option>
+                            <option value="Halyk Bank">
+                              Halyk Bank
+                            </option>
+                            <option value="Kaspi.kz">
+                              Kaspi.kz
+                            </option>
+                            <option value="BCC.KZ">
+                              BCC.KZ
+                            </option>
+                            <option value="Bereke Bank">
+                              Bereke Bank
+                            </option>
+
+                            <option value="" disabled>
+                              Bank transfer (Belarus):
+                            </option>
+                            <option value="BNB">
+                              BNB
+                            </option>
+                            <option value="EGRIP">
+                              EGRIP
+                            </option>
+
+                            <option value="" disabled>
+                              Bank transfer (Turkey):
+                            </option>
+                            <option value="Ziraat Bank">
+                              Ziraat Bank TRY/USD/EUR
+                            </option>
+
+                            <option value="" disabled>
+                              Bank transfer (Indonesia):
+                            </option>
+                            <option value="MayBank">
+                              MayBank
+                            </option>
+
+                            <option value="" disabled>
+                              Payment services (Thailand):
+                            </option>
+                            <option value="True Wallet">
+                              True Wallet
+                            </option>
+
+                            <option value="" disabled>
+                              Payment services (Russia):
                             </option>
                             <option value="ЮMoney">
                               ЮMoney
                             </option>
+
                             <option value="" disabled>
-                              Банковские платежи РФ:
+                              Payment services (World):
                             </option>
-                            <option value="BANGKOK BANK">
-                              BANGKOK BANK
+                            <option value="Binance Pay">
+                              Binance Pay
                             </option>
-                            <option value="KASIKORN BANK">
-                              KASIKORN
+                            <option value="Telegram Wallet">
+                              Telegram Wallet
                             </option>
-                            <option value="SBERBANK">
-                              SBERBANK
+
+                            <option value="" disabled>
+                              Cryptocurrencies:
                             </option>
-                            <option value="TINKOFF">
-                              TINKOFF
+
+                            <option value="Bitcoin">
+                              Bitcoin
                             </option>
-                            <option value="СБП">
-                              СБП
+                            <option value="Ethereum ERC20">
+                              Ethereum ERC20
                             </option>
-                            <option value="QR СБП">
-                              QR СБП
+                            <option value="USDT Tether BEP20">
+                              USDT Tether BEP20
                             </option>
-                            <option value="QR СБЕР">
-                              QR СБЕР
+                            <option value="USDT Tether TRC20">
+                              USDT Tether TRC20
                             </option>
-                            <option value="QR BANGKOK BANK">
-                              QR BANGKOK
-                            </option>
-                            <option value="QR KASIKORN">
-                              QR KASIKORN
-                            </option>
-                            <option value="BTC">
-                              BTC
-                            </option>
-                            <option value="ETH">
-                              ETH
-                            </option>
-                            <option value="USDT">
-                              USDT
+                            <option value="USDT Tether ERC20">
+                              USDT Tether ERC20
                             </option>
                           </select>
                         </div>
 
-                        <div v-show="currency !== null && donation_type !== null" class="form-outline mb-4">
+                        <div v-show="issuer !== null && donation_type !== null" class="form-outline mb-4">
                           <label for="amount" class="col-sm-12 control-label">Enter {{ this.currency }} amount</label>
                           <input type="number" name="amount" v-model.number="amount" id="amount" class="form-control"/>
                         </div>
 
-                        <div v-show="loadTokenAmount" class="wrapper">
-                          <div class="loading-text"> <!--Loading-text-->
-                            <h4>Calculating how many tokens you will receive
-                              <span class="dot-one"> .</span>
-                              <span class="dot-two"> .</span>
-                              <span class="dot-three"> .</span>
-                            </h4>
-                          </div> <!--/Loading-text-->
-                        </div> <!-- /Wrapper -->
-                        <h4 class="tokens-amt" v-show="tokens !== null && !loadTokenAmount">You will get {{ this.tokens }} tokens</h4>
-
                         <div class="text-center pt-1 mb-5 pb-1">
-                          <button v-show="tokens !== null && !loadTokenAmount" type="submit" :disabled="processing"
+                          <button v-show="amount !== null" type="submit" :disabled="processing"
                                   class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
                             {{ processing ? "Please wait" : "Next" }}
                           </button>
                           &nbsp;
                           <!--<a class="text-muted" href="#!">Forgot password?</a>-->
                         </div>
-
                       </form>
                     </transition>
 
@@ -197,10 +249,20 @@
                       <form v-show="step===paymentRequisitesStep" action="javascript:void(0)" @submit.prevent="next"
                             class="row col-8 m-auto" method="post">
                         <h2>Payment requisites</h2>
-                        <div class="form-outline mb-4">
+                        <p class="pt-1 donation-description">
+                          Open the mobile banking or payment system application. Transfer {{amount}} {{currency}}
+                          to the following payment details:
+                        </p>
+                        <div class="text-center form-outline mb-2">
                           <Requisites v-bind="requisitesProps"></Requisites>
                         </div>
 
+                        <p class="p-2 donation-description">
+                          If needed, you can leave a comment for the payment.
+                          <br/>
+                          <br/>ATTENTION! After making the payment, take a screenshot of the transaction or save the
+                          receipt, then return to the payment form and press the PAY button.
+                        </p>
                         <div class="text-center pt-1 mb-5 pb-1">
                           <button type="button" @click="prev" :disabled="processing"
                                   class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
@@ -292,7 +354,6 @@ export default {
       currency: null,
       issuer: null,
       amount: null,
-      tokens: null,
       file: null,
       user: {
         phone: "",
@@ -303,8 +364,8 @@ export default {
       validationErrors: {},
       processing: false,
       paymentCompleted: false,
-      loadTokenAmount: false,
-      firstTime: true
+      firstTime: true,
+      isWidget: false
     }
   },
   methods: {
@@ -327,13 +388,11 @@ export default {
       this.currency = null
       this.issuer = null
       this.amount = null
-      this.tokens = null
       this.file = null
       this.validationErrors = {}
       this.processing = false
       this.paymentCompleted = false
       this.firstTime = false
-      this.loadTokenAmount = false
       this.$refs.addImageForm.reset()
       this.$refs.fileupload.value = null
     },
@@ -401,13 +460,6 @@ export default {
     }
   },
   watch: {
-    async amount(newValue, oldValue) {
-      if (this.amount !== null) {
-        this.loadTokenAmount = true;
-      }
-
-      this.debouncedFetch(newValue, oldValue);
-    },
     issuer(newValue, oldValue) {
       switch (newValue) {
         case "Line":
@@ -535,26 +587,20 @@ export default {
     }
   },
   created() {
+    let isWidget = this.$route.query.widget
+
+    if (isWidget === undefined) {
+      document.getElementById('custom-body').style.backgroundColor = '#eee';
+      this.isWidget = false
+    }
+
+    if (isWidget === 'true') {
+      this.isWidget = true
+    }
+
     if (this.$store.state.auth.authenticated) {
       this.firstTime = false
     }
-
-    this.debouncedFetch = debounce(async (newValue, oldValue) => {
-      let url = `/api/convert?amount=${this.amount}&from=${this.currency}&type=${this.donation_type}`;
-
-      await axios.get(url).then(({data}) => {
-        this.loadTokenAmount = false;
-        this.tokens = data.result.tokensAmt;
-      }).catch(({data}) => {
-        if (data.status === 422) {
-          this.loadTokenAmount = false;
-          this.validationErrors = data.data.errors
-        } else {
-          this.validationErrors = {}
-          alert(data.data.message)
-        }
-      })
-    }, 1000);
   },
 }
 </script>

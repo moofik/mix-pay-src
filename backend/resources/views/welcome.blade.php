@@ -11,7 +11,7 @@
     <script> window._asset = '{{ asset('') }}'; </script>
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 </head>
-<body style="background-color: #eee;">
+<body id="custom-body">
 <div id="app">
     <router-view></router-view>
 </div>

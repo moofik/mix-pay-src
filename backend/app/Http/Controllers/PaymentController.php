@@ -18,25 +18,7 @@ class PaymentController extends Controller
             /** @var RegistrationDto $registrationDto */
             $registrationDto = \DB::transaction(function () use ($request) {
                 $registrationDto = $this->registerUser($request, random_int(100, 1000000));
-
-                $data = $request->safe()->only([
-                    'donation_type',
-                    'currency',
-                    'payment_amount',
-                    'payment_method',
-                ]);
-
-                $moneyConverter = new MoneyConverter(0.1, 0.025);
-                $tokens = $moneyConverter->convert($data['payment_amount'], $data['currency'], $data['donation_type']);
-                $data['tokens_amount'] = $tokens->tokensAmt;
-
-                if ($request->file()) {
-                    $fileName = time() . '_' . $request->file('file')?->getClientOriginalName();
-                    $filePath = $request->file('file')?->storeAs(storage_path('uploads'), $fileName, 'public');
-                    $data['attachment'] = $filePath;
-                }
-
-                $registrationDto->user->payments()->create($data);
+                $registrationDto->user->payments()->create($this->getData());
 
                 return $registrationDto;
             });
@@ -56,24 +38,7 @@ class PaymentController extends Controller
         try {
             /** @var RegistrationDto $registrationDto */
             \DB::transaction(function () use ($request) {
-                $data = $request->safe()->only([
-                    'donation_type',
-                    'currency',
-                    'payment_amount',
-                    'payment_method',
-                ]);
-
-                $moneyConverter = new MoneyConverter(0.1, 0.025);
-                $tokens = $moneyConverter->convert($data['payment_amount'], $data['currency'], $data['donation_type']);
-                $data['tokens_amount'] = $tokens->tokensAmt;
-
-                if ($request->file()) {
-                    $fileName = time() . '_' . $request->file('file')?->getClientOriginalName();
-                    $filePath = $request->file('file')?->storeAs(storage_path('uploads'), $fileName, 'public');
-                    $data['attachment'] = $filePath;
-                }
-
-                auth()->user()->payments()->create($data);
+                auth()->user()->payments()->create($this->getData());
             });
         } catch (\Throwable $exception) {
             abort(422, $exception->getMessage());
@@ -82,5 +47,33 @@ class PaymentController extends Controller
         return response()->json([
             'payment_status' => 'success',
         ]);
+    }
+
+    /**
+     * @param  Request  $request
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return array
+     */
+    private function getData(Request $request): array
+    {
+        $data = $request->safe()->only([
+            'currency',
+            'payment_amount',
+            'payment_method',
+        ]);
+
+        $data['donation_type'] = 1;
+
+        $moneyConverter = new MoneyConverter(0.1, 0.025);
+        $tokens = $moneyConverter->convert($data['payment_amount'], $data['currency'], $data['donation_type']);
+        $data['tokens_amount'] = $tokens->tokensAmt;
+
+        if ($request->file()) {
+            $fileName = time() . '_' . $request->file('file')?->getClientOriginalName();
+            $filePath = $request->file('file')?->storeAs(storage_path('uploads'), $fileName, 'public');
+            $data['attachment'] = $filePath;
+        }
+
+        return $data;
     }
 }
