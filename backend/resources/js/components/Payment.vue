@@ -270,13 +270,13 @@
                         <h2 v-if="!isWidget">Payment requisites</h2>
                         <p class="pt-1 donation-description">
                           Open the mobile banking or payment system application. Transfer {{ amount }} {{ currency }}
-                          to the following payment details:
+                          to the following payment details ({{this.issuer}}):
                         </p>
                         <div :class="{'form-outline': true, 'mb-4': !isWidget, 'requisites-widget-container': isWidget}">
                           <Requisites v-bind="requisitesProps"></Requisites>
                         </div>
 
-                        <p class="p-2 donation-description">
+                        <p class="donation-description">
                           If needed, you can leave a comment for the payment.
                           <br/>
                           <br/>ATTENTION! After making the payment, take a screenshot of the transaction or save the
@@ -832,13 +832,17 @@ body {
   font-size: 0.7em;
 }
 
+.requisites-widget-container p {
+  margin-bottom: 0 !important;
+}
+
 @media (min-width: 300px) and (max-width: 499px) {
   .logo .text-logo {
     font-size: 0.9em;
   }
 
   .widget-form-font {
-    font-size: 1em;
+    font-size: 0.9em;
   }
 }
 
