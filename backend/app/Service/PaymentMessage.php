@@ -20,7 +20,7 @@ class PaymentMessage implements MessageInterface
         $paymentMessage .= "Валюта: " . $this->payment->currency . "\n";
         $amt = $this->payment->payment_amount;
         if ($this->payment->payment_amount < 1) {
-            $amt = number_format($amt, 10);
+            $amt = rtrim(number_format($amt, 10), '0');
         }
         $paymentMessage .= "Количество: " . $amt . "\n";
         $link = "storage/uploads/" . $this->payment->attachment;
