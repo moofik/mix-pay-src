@@ -1,6 +1,6 @@
 <template>
   <section class="h-100 gradient-form">
-    <div class="container-md py-5 h-100">
+    <div :class="{'container-md': true, 'py-5': !isWidget, 'pb-2': isWidget, 'pt-4': isWidget, 'h-100': true}">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-xl-10">
           <div :class="{'card': !isWidget, 'rounded-3': true, 'text-black': true}">
@@ -15,14 +15,20 @@
               <div class="col-lg-12">
                 <div class="card-body p-md-5 mx-md-4">
 
-                  <div class="logo text-center">
-                    <img :src="asset('images/logo.png')"
-                         :class="{'widget-logo': isWidget, 'usual-logo': !isWidget}" alt="logo">
-                    <!--<h4 class="mt-1 mb-5 pb-1">Payment</h4>-->
-                    <div :class="{'text-logo': true, 'mini-margin-top': isWidget}">PAYMENT SYSTEMS</div>
+                  <div
+                      :class="{'row': isWidget, 'align-items-center': isWidget, 'widget-logo-container': isWidget, 'logo': true, 'text-center': true}">
+                    <h2 v-show="step===1" class="col widget-step-name" v-if="isWidget">Payment details</h2>
+                    <h2 v-show="step===2" class="col widget-step-name" v-if="isWidget">Contact information</h2>
+                    <h2 v-show="step===paymentRequisitesStep" class="col widget-step-name" v-if="isWidget">Payment requisites</h2>
+                    <h2 v-show="step===paymentConfirmationStep" class="col widget-step-name" v-if="isWidget">Payment confirmation</h2>
+                    <div :class="{'col': isWidget}">
+                      <img :src="asset('images/logo.png')"
+                           :class="{'widget-logo': isWidget, 'usual-logo': !isWidget, 'col': true}" alt="logo">
+                      <!--<h4 class="mt-1 mb-5 pb-1">Payment</h4>-->
+                      <div :class="{'text-logo': true, 'mini-margin-top': isWidget}">PAYMENT SYSTEMS</div>
+                    </div>
                   </div>
-
-                  <p v-if="step===1" :class="{'p-4': !isWidget, 'p-1': isWidget, 'donation-description': true}">
+                  <p v-if="step===1" :class="{'p-4': !isWidget, 'p-1': isWidget, 'donation-description': true, 'donation-description-mb': !isWidget}">
                     The support of our tournament will help to attract more attention to the problems of people
                     with disabilities and will contribute to their integration into society.
                   </p>
@@ -50,9 +56,9 @@
 
                     <transition name="slide-fade">
                       <form v-show="step===1" action="javascript:void(0)" @submit.prevent="next"
-                            class="row col-8 m-auto" method="post">
-                        <h2>Payment details</h2>
-                        <div v-if="!isDebug" class="form-outline mb-4">
+                            :class="{'row': true, 'col-8': true, 'm-auto': true, 'widget-form-font': isWidget}" method="post">
+                        <h2 v-if="!isWidget">Payment details</h2>
+                        <div v-if="!isDebug" :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
                           <label for="donation_type" class="col-sm-12 control-label">Select donation type</label>
                           <select required name="donation_type" id="donation_type"
                                   class="form-select donation-type-select" v-model.number="donation_type">
@@ -62,7 +68,7 @@
                           </select>
                         </div>
 
-                        <div class="form-outline mb-4">
+                        <div :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
                           <label for="issuer" class="col-sm-12 control-label">Select payment method</label>
                           <select required name="issuer" id="issuer"
                                   class="form-select" v-model="issuer">
@@ -147,20 +153,20 @@
                             <option value="MayBank (IDR)">
                               MayBank (IDR)
                             </option>
-<!--
-                            <option value="" disabled>
-                              Payment services (Thailand):
-                            </option>
-                            <option value="True Wallet">
-                              True Wallet
-                            </option>
+                            <!--
+                                                        <option value="" disabled>
+                                                          Payment services (Thailand):
+                                                        </option>
+                                                        <option value="True Wallet">
+                                                          True Wallet
+                                                        </option>
 
-                            <option value="" disabled>
-                              Payment services (Russia):
-                            </option>
-                            <option value="ЮMoney">
-                              ЮMoney
-                            </option>-->
+                                                        <option value="" disabled>
+                                                          Payment services (Russia):
+                                                        </option>
+                                                        <option value="ЮMoney">
+                                                          ЮMoney
+                                                        </option>-->
 
                             <option value="" disabled>
                               Payment services (World):
@@ -194,7 +200,7 @@
                           </select>
                         </div>
 
-                        <div v-show="issuer !== null && donation_type !== null" class="form-outline mb-4">
+                        <div v-show="issuer !== null && donation_type !== null" :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
                           <label for="amount" class="col-sm-12 control-label">Enter {{ this.currency }} amount</label>
                           <input type="number" name="amount" v-model.number="amount" id="amount" class="form-control"/>
                         </div>
@@ -214,21 +220,21 @@
                     <transition name="slide-fade">
                       <form v-if="!$store.state.auth.authenticated && this.firstTime && step===2"
                             action="javascript:void(0)" @submit.prevent="next"
-                            class="row col-8 m-auto" method="post">
-                        <h2>Contact information</h2>
-                        <div class="form-outline mb-4">
+                            :class="{'row': true, 'col-8': true, 'm-auto': true, 'widget-form-font': isWidget}" method="post">
+                        <h2 v-if="!isWidget">Contact information</h2>
+                        <div :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
                           <input required type="phone" name="phone" v-model="user.phone" id="phone"
                                  class="form-control"/>
                           <label class="form-label" for="phone">Phone</label>
                         </div>
 
-                        <div class="form-outline mb-4">
+                        <div :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
                           <input required type="email" name="email" v-model="user.email" id="email" class="form-control"
                                  placeholder="example@mail.com"/>
                           <label class="form-label" for="email">Email</label>
                         </div>
 
-                        <div class="form-outline mb-4">
+                        <div :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
                           <input required type="password" name="password" v-model="user.password" id="password"
                                  class="form-control"/>
                           <label class="form-label" for="password">Password</label>
@@ -260,13 +266,13 @@
 
                     <transition name="slide-fade">
                       <form v-show="step===paymentRequisitesStep" action="javascript:void(0)" @submit.prevent="next"
-                            class="row col-8 m-auto" method="post">
-                        <h2>Payment requisites</h2>
+                            :class="{'row': true, 'col-8': true, 'm-auto': true, 'widget-form-font': isWidget}" method="post">
+                        <h2 v-if="!isWidget">Payment requisites</h2>
                         <p class="pt-1 donation-description">
                           Open the mobile banking or payment system application. Transfer {{ amount }} {{ currency }}
                           to the following payment details:
                         </p>
-                        <div class="text-center form-outline mb-2">
+                        <div :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
                           <Requisites v-bind="requisitesProps"></Requisites>
                         </div>
 
@@ -295,8 +301,8 @@
                     <transition name="slide-fade">
                       <form ref="addImageForm" v-show="step===paymentConfirmationStep" action="javascript:void(0)"
                             @submit.prevent="pay"
-                            class="row col-8 m-auto" method="post">
-                        <h2>Payment confirmation</h2>
+                            :class="{'row': true, 'col-8': true, 'm-auto': true, 'widget-form-font': isWidget}" method="post">
+                        <h2 v-if="!isWidget">Payment confirmation</h2>
                         <strong>Attach a receipt confirming the payment:</strong>
                         <input required type="file" ref="fileupload" class="form-control" v-on:change="onFileChange"/>
 
@@ -775,12 +781,17 @@ export default {
   background: linear-gradient(to right, #DD7C45, #DD7C45, #D76546, #D76546);
 }
 
+.widget-logo-container {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
 body {
   overflow-x: hidden !important;
 }
 
 .widget-logo {
-  width: 15%;
+  width: 40%;
 }
 
 .usual-logo {
@@ -795,6 +806,9 @@ body {
 .donation-description {
   font-weight: 700;
   margin-top: 1em;
+}
+
+.donation-description-mb {
   margin-bottom: 3em;
 }
 
@@ -805,13 +819,26 @@ body {
   text-overflow: ellipsis;
 }
 
+.widget-step-name {
+  margin-left: 2em;
+  border: 0.05em solid black;
+  padding: 0.7em;
+  border-radius: 8px;
+  font-size: 1.2em;
+  color: rgba(121, 113, 113, 0.99);
+}
+
 @media (min-width: 300px) and (max-width: 499px) {
   .logo .text-logo {
-    font-size: 0.8em;
+    font-size: 0.9em;
+  }
+
+  .widget-form-font {
+    font-size: 1em;
   }
 }
 
-@media (min-width: 500px) {
+@media (min-width: 500px) and (max-width: 768px) {
   .logo .text-logo {
     margin-bottom: 2em;
     margin-top: -1.5em;
@@ -819,6 +846,10 @@ body {
 
   .logo .text-logo.mini-margin-top {
     font-size: 1em !important;
+  }
+
+  .widget-form-font {
+    font-size: 1em;
   }
 }
 
@@ -855,7 +886,6 @@ $font-weight-bold: 700;
   margin-top: -0.2em;
   font-size: 0.5em;
 }
-
 
 
 .pen-description {
