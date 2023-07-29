@@ -55,7 +55,7 @@
                         <div v-if="!isDebug" class="form-outline mb-4">
                           <label for="donation_type" class="col-sm-12 control-label">Select donation type</label>
                           <select required name="donation_type" id="donation_type"
-                                  class="form-select" v-model.number="donation_type">
+                                  class="form-select donation-type-select" v-model.number="donation_type">
                             <option selected disabled value="1">
                               Basketball championship among the disabled people
                             </option>
@@ -796,6 +796,13 @@ body {
   font-weight: 700;
   margin-top: 1em;
   margin-bottom: 3em;
+}
+
+.donation-type-select {
+  max-width: 100%;
+  white-space: normal;
+  /* For Firefox: */
+  text-overflow: ellipsis;
 }
 
 @media (min-width: 300px) and (max-width: 499px) {
