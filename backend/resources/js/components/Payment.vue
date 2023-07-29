@@ -309,8 +309,12 @@
 
                     <transition name="slide-fade">
                       <div v-show="step===paymentThanksStep">
-                        <h2>Thanks for the donation!</h2>
-
+                        <h2>Thank you for your donation!</h2>
+                        <p v-show="payment_id" :class="{'p-4': !isWidget, 'p-1': isWidget, 'donation-description': true, 'donation-description-mb': !isWidget}">
+                          Your payment id: {{this.payment_id}}
+                          <br/>
+                          Payment details and information about your account have been sent to your email address.
+                        </p>
                         <div class="text-center pt-1 mb-5 pb-1">
                           <button :disabled="processing" @click="toAuthorizedPayment"
                                   class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
@@ -359,6 +363,7 @@ export default {
       currency: null,
       issuer: null,
       amount: null,
+      payment_id: null,
       file: null,
       user: {
         phone: "",
@@ -393,6 +398,7 @@ export default {
       this.issuer = null
       this.amount = null
       this.file = null
+      this.payment_id = null
       this.validationErrors = {}
       this.processing = false
       this.paymentCompleted = false
@@ -442,7 +448,7 @@ export default {
 
       await axios.post(this.url, formData, config).then(({data}) => {
         this.validationErrors = {}
-
+        this.payment_id = data.payment_id
         if (!this.$store.state.auth.authenticated && this.firstTime) {
           this.signIn(data)
           this.paymentCompleted = true;
