@@ -807,6 +807,10 @@ export default {
     border-top-right-radius: .3rem;
     border-bottom-right-radius: .3rem;
   }
+
+  .payment-info {
+    width: 600px;
+  }
 }
 
 $brand-primary: #ff6400;
@@ -832,9 +836,7 @@ $font-weight-bold: 700;
   font-size: 0.5em;
 }
 
-.payment-info {
-  width: 600px;
-}
+
 
 .pen-description {
   display: flex;
