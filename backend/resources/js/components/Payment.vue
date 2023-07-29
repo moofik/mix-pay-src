@@ -512,11 +512,20 @@ export default {
           this.currency = 'BYN'
           break
 
-        case "Ziraat Bank":
+        case "Ziraat Bank (EUR)":
+          this.currency = 'EUR'
+          break
+        case "Ziraat Bank (USD)":
+          this.currency = 'USD'
+          break
+        case "Ziraat Bank (TRY)":
           this.currency = 'TRY'
           break
 
-        case "MayBank":
+        case "MayBank (IDR)":
+          this.currency = 'IDR'
+          break
+        case "MayBank (USD)":
           this.currency = 'IDR'
           break
 
