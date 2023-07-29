@@ -604,8 +604,8 @@ export default {
 
         case "Tinkoff Bank":
           return {
-            number: '2200-3001-0026-6285',
-            name: 'Иван Васильевич Д.'
+            number: '2200-7001-7704-5027',
+            name: 'Анна Анатольевна Ч.'
           }
 
         case "Raiffeisen Bank":
