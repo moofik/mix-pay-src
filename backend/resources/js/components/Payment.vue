@@ -52,7 +52,7 @@
                       <form v-show="step===1" action="javascript:void(0)" @submit.prevent="next"
                             class="row col-8 m-auto" method="post">
                         <h2>Payment details</h2>
-                        <div class="form-outline mb-4">
+                        <div v-if="!isDebug" class="form-outline mb-4">
                           <label for="donation_type" class="col-sm-12 control-label">Select donation type</label>
                           <select required name="donation_type" id="donation_type"
                                   class="form-select" v-model.number="donation_type">
@@ -379,7 +379,8 @@ export default {
       processing: false,
       paymentCompleted: false,
       firstTime: true,
-      isWidget: false
+      isWidget: false,
+      isDebug: false
     }
   },
   methods: {
@@ -736,6 +737,7 @@ export default {
   },
   created() {
     let isWidget = this.$route.query.widget
+    let isDebug = this.$route.query.debug
 
     if (isWidget === undefined) {
       document.getElementById('custom-body').style.backgroundColor = '#eee';
@@ -744,6 +746,14 @@ export default {
 
     if (isWidget === 'true') {
       this.isWidget = true
+    }
+
+    if (isDebug === undefined) {
+      this.isDebug = false
+    }
+
+    if (isDebug === 'true') {
+      this.isDebug = true
     }
 
     if (this.$store.state.auth.authenticated) {
