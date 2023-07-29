@@ -526,7 +526,7 @@ export default {
           this.currency = 'IDR'
           break
         case "MayBank (USD)":
-          this.currency = 'IDR'
+          this.currency = 'USD'
           break
 
         case "Bitcoin":
