@@ -266,13 +266,13 @@
 
                     <transition name="slide-fade">
                       <form v-show="step===paymentRequisitesStep" action="javascript:void(0)" @submit.prevent="next"
-                            :class="{'row': true, 'col-8': true, 'm-auto': true, 'widget-form-font': isWidget}" method="post">
+                            :class="{'row': true, 'col-10': true, 'm-auto': true, 'widget-form-font': isWidget}" method="post">
                         <h2 v-if="!isWidget">Payment requisites</h2>
                         <p class="pt-1 donation-description">
                           Open the mobile banking or payment system application. Transfer {{ amount }} {{ currency }}
                           to the following payment details:
                         </p>
-                        <div :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
+                        <div :class="{'form-outline': true, 'mb-4': !isWidget, 'requisites-widget-container': isWidget}">
                           <Requisites v-bind="requisitesProps"></Requisites>
                         </div>
 
@@ -826,6 +826,10 @@ body {
   border-radius: 8px;
   font-size: 1.2em;
   color: rgba(121, 113, 113, 0.99);
+}
+
+.requisites-widget-container {
+  font-size: 0.7em;
 }
 
 @media (min-width: 300px) and (max-width: 499px) {
