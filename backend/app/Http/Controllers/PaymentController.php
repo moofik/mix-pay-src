@@ -30,8 +30,9 @@ class PaymentController extends Controller
         }
 
         $registrationDto = $transactionDto['dto'];
+        /** @var Payment $payment */
         $payment = $transactionDto['payment'];
-        $paymentMessage = new PaymentMessage(auth()->user(), $payment);
+        $paymentMessage = new PaymentMessage($payment->user, $payment);
         $tgService = new TelegramService([131231613, 463609933]);
         $tgService->send($paymentMessage);
 
@@ -55,7 +56,7 @@ class PaymentController extends Controller
             abort(422, $exception->getMessage());
         }
 
-        $paymentMessage = new PaymentMessage(auth()->user(), $payment);
+        $paymentMessage = new PaymentMessage($payment->user, $payment);
         $tgService = new TelegramService([131231613, 463609933]);
         $tgService->send($paymentMessage);
 

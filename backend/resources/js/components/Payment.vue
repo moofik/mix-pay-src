@@ -202,7 +202,7 @@
 
                         <div v-show="issuer !== null && donation_type !== null" :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
                           <label for="amount" class="col-sm-12 control-label">Enter {{ this.currency }} amount</label>
-                          <input type="number" name="amount" v-model.number="amount" id="amount" class="form-control"/>
+                          <input type="number" step="0.000000001" name="amount" v-model.number="amount" id="amount" class="form-control"/>
                         </div>
 
                         <div class="text-center pt-1 mb-5 pb-1">
