@@ -18,7 +18,7 @@
                   <div
                       :class="{'row': isWidget, 'align-items-center': isWidget, 'widget-logo-container': isWidget, 'logo': true, 'text-center': true}">
                     <h2 v-show="step===1" class="col widget-step-name" v-if="isWidget">Payment details</h2>
-                    <h2 v-show="step===2" class="col widget-step-name" v-if="isWidget">Contact information</h2>
+                    <h2 v-show="step===2 && !firstTime" class="col widget-step-name" v-if="isWidget">Contact information</h2>
                     <h2 v-show="step===paymentRequisitesStep" class="col widget-step-name" v-if="isWidget">Payment requisites</h2>
                     <h2 v-show="step===paymentConfirmationStep" class="col widget-step-name" v-if="isWidget">Payment confirmation</h2>
                     <div :class="{'col': isWidget}">
