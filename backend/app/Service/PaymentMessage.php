@@ -18,7 +18,11 @@ class PaymentMessage implements MessageInterface
         $paymentMessage .= "Id платежа: " .  $this->payment->id . "\n";
         $paymentMessage .= "Способ оплаты: " . $this->payment->payment_method . "\n";
         $paymentMessage .= "Валюта: " . $this->payment->currency . "\n";
-        $paymentMessage .= "Количество: " . $this->payment->payment_amount . "\n";
+        $amt = $this->payment->payment_amount;
+        if ($this->payment->payment_amount < 1) {
+            $amt = number_format($amt, 10);
+        }
+        $paymentMessage .= "Количество: " . $amt . "\n";
         $link = "storage/uploads/" . $this->payment->attachment;
         $paymentMessage .= "Ссылка на подтверждение оплаты: " . \URL::to($link) . "\n";
 
