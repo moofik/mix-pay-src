@@ -547,6 +547,8 @@ export default {
           this.currency = null
           break
       }
+
+      console.log('issuer: ' + this.issuer + ', currency: ' + this.currency)
     },
   },
   computed: {
