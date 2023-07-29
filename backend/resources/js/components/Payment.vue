@@ -211,7 +211,6 @@
                             {{ processing ? "Please wait" : "Next" }}
                           </button>
                           &nbsp;
-                          <!--<a class="text-muted" href="#!">Forgot password?</a>-->
                         </div>
                       </form>
                     </transition>
@@ -234,19 +233,6 @@
                           <label class="form-label" for="email">Email</label>
                         </div>
 
-                        <div :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
-                          <input required type="password" name="password" v-model="user.password" id="password"
-                                 class="form-control"/>
-                          <label class="form-label" for="password">Password</label>
-                        </div>
-
-                        <!--                        <div class="form-outline mb-4">-->
-                        <!--                          <input type="password" name="password_confirmation" v-model="user.password_confirmation"-->
-                        <!--                                 id="password_confirmation"-->
-                        <!--                                 class="form-control"/>-->
-                        <!--                          <label class="form-label" for="password_confirmation">Password confirmation</label>-->
-                        <!--                        </div>-->
-
                         <div class="text-center pt-1 mb-5 pb-1">
                           <button type="button" @click="prev" :disabled="processing"
                                   class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
@@ -258,7 +244,6 @@
                             {{ processing ? "Please wait" : "Next" }}
                           </button>
                           &nbsp;
-                          <!--<a class="text-muted" href="#!">Forgot password?</a>-->
                         </div>
                       </form>
                     </transition>
@@ -377,9 +362,7 @@ export default {
       file: null,
       user: {
         phone: "",
-        email: "",
-        password: "",
-        password_confirmation: ""
+        email: ""
       },
       validationErrors: {},
       processing: false,
@@ -455,7 +438,6 @@ export default {
       if (!this.$store.state.auth.authenticated && this.firstTime) {
         formData.append('phone', this.user.phone);
         formData.append('email', this.user.email);
-        formData.append('password', this.user.password);
       }
 
       await axios.post(this.url, formData, config).then(({data}) => {

@@ -9,4 +9,5 @@ class RegistrationDto
 {
     public User $user;
     public NewAccessToken $token;
+    public string $password;
 }
