@@ -5,7 +5,7 @@
         <div class="col-xl-10">
           <div :class="{'card': !isWidget, 'rounded-3': true, 'text-black': true}">
             <div class="text-end me-4">
-              <a href="https://t.me/MIXPAY_SUPPORT" class="btn btn-primary btn-block fa-lg me-2 gradient-custom-2">SUPPORT</a>
+              <a href="https://t.me/MIXPAY_SUPPORT" target="_blank" class="btn btn-primary btn-block fa-lg me-2 gradient-custom-2">SUPPORT</a>
               <button v-if="$store.state.auth.authenticated" class="btn btn-primary btn-block fa-lg gradient-custom-2"
                       @click="logout">LOGOUT
               </button>
