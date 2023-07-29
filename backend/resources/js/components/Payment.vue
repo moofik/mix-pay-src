@@ -765,6 +765,9 @@ export default {
   background: linear-gradient(to right, #DD7C45, #DD7C45, #D76546, #D76546);
 }
 
+body {
+  overflow-x: hidden !important;
+}
 
 .widget-logo {
   width: 15%;
