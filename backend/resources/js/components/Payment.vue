@@ -3,61 +3,62 @@
     <div :class="{'container-md': true, 'py-5': !isWidget, 'pb-2': isWidget, 'pt-4': isWidget, 'h-100': true}">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-xl-10">
-          <div :class="{'card': !isWidget, 'rounded-3': true, 'text-black': true}">
-            <div class="text-end me-4">
-              <a href="https://t.me/MIXPAY_SUPPORT" target="_blank" class="btn btn-primary btn-block fa-lg me-2 gradient-custom-2">SUPPORT</a>
-              <button v-if="$store.state.auth.authenticated" class="btn btn-primary btn-block fa-lg gradient-custom-2"
-                      @click="logout">LOGOUT
-              </button>
+          <div :class="{'rounded-3': true, 'text-black': true, 'card-background': true, 'row': true}">
+            <div
+                :class="{'row': isWidget, 'align-items-center': isWidget, 'widget-logo-container': isWidget, 'logo': true, 'col-sm': true}">
+              <!--<h2 v-show="step===1" class="col widget-step-name" v-if="isWidget">Payment details</h2>
+              <h2 v-show="step===2 && firstTime" class="col widget-step-name" v-if="isWidget">Contact information</h2>
+              <h2 v-show="step===paymentRequisitesStep" class="col widget-step-name" v-if="isWidget">Payment requisites</h2>
+              <h2 v-show="step===paymentConfirmationStep" class="col widget-step-name" v-if="isWidget">Payment confirmation</h2>
+              --><div :class="{'col': isWidget}">
+                  <img :src="asset('images/logo2.png')"
+                       :class="{'widget-logo': isWidget, 'usual-logo': !isWidget, 'col': true}" alt="logo">
+                  <!--<h4 class="mt-1 mb-5 pb-1">Payment</h4>-->
+                </div>
             </div>
 
-            <div class="row g-0">
-              <div class="col-lg-12">
-                <div class="card-body p-md-5 mx-md-4">
+            <div class="text-end me-4 col-sm">
+              <a href="https://t.me/MIXPAY_SUPPORT" target="_blank" class="btn button-support btn-block fa-lg me-2 gradient-custom-2">Support</a>
+              <button v-if="$store.state.auth.authenticated" class="btn btn-primary btn-block fa-lg gradient-custom-2"
+                      @click="logout">Logout
+              </button>
+            </div>
+          </div>
 
-                  <div
-                      :class="{'row': isWidget, 'align-items-center': isWidget, 'widget-logo-container': isWidget, 'logo': true, 'text-center': true}">
-                    <h2 v-show="step===1" class="col widget-step-name" v-if="isWidget">Payment details</h2>
-                    <h2 v-show="step===2 && firstTime" class="col widget-step-name" v-if="isWidget">Contact information</h2>
-                    <h2 v-show="step===paymentRequisitesStep" class="col widget-step-name" v-if="isWidget">Payment requisites</h2>
-                    <h2 v-show="step===paymentConfirmationStep" class="col widget-step-name" v-if="isWidget">Payment confirmation</h2>
-                    <div :class="{'col': isWidget}">
-                      <img :src="asset('images/logo.png')"
-                           :class="{'widget-logo': isWidget, 'usual-logo': !isWidget, 'col': true}" alt="logo">
-                      <!--<h4 class="mt-1 mb-5 pb-1">Payment</h4>-->
-                      <div :class="{'text-logo': true, 'mini-margin-top': isWidget}">PAYMENT SYSTEMS</div>
+          <div class="row g-0">
+            <div class="col-lg-12">
+              <div class="card-body p-md-5 mx-md-4">
+                <section class="section-form">
+                  <div class="section-form-stepper">
+                    <div class="step" :class="{'step-active' : step === 1, 'step-done': step > 1}"><span
+                        class="step-number">1</span></div>
+                    <div class="step" :class="{'step-active' : step === 2, 'step-done': step > 2}"><span
+                        class="step-number">2</span></div>
+                    <div class="step" :class="{'step-active' : step === 3, 'step-done': step > 3}"><span
+                        class="step-number">3</span></div>
+                    <div v-if="this.firstTime" class="step"
+                         :class="{'step-active' : step === 4, 'step-done': step > 4}"><span
+                        class="step-number">4</span></div>
+                  </div>
+
+                  <div class="col-12" v-if="Object.keys(validationErrors).length > 0">
+                    <div class="alert alert-danger">
+                      <ul class="mb-0">
+                        <li v-for="(value, key) in validationErrors" :key="key">{{ value[0] }}</li>
+                      </ul>
                     </div>
                   </div>
+
                   <p v-if="step===1" :class="{'p-4': !isWidget, 'p-1': isWidget, 'donation-description': true, 'donation-description-mb': !isWidget}">
                     The support of our tournament will help to attract more attention to the problems of people
                     with disabilities and will contribute to their integration into society.
                   </p>
 
-                  <section class="section-form">
-                    <div class="section-form-stepper">
-                      <div class="step" :class="{'step-active' : step === 1, 'step-done': step > 1}"><span
-                          class="step-number">1</span></div>
-                      <div class="step" :class="{'step-active' : step === 2, 'step-done': step > 2}"><span
-                          class="step-number">2</span></div>
-                      <div class="step" :class="{'step-active' : step === 3, 'step-done': step > 3}"><span
-                          class="step-number">3</span></div>
-                      <div v-if="this.firstTime" class="step"
-                           :class="{'step-active' : step === 4, 'step-done': step > 4}"><span
-                          class="step-number">4</span></div>
-                    </div>
-
-                    <div class="col-12" v-if="Object.keys(validationErrors).length > 0">
-                      <div class="alert alert-danger">
-                        <ul class="mb-0">
-                          <li v-for="(value, key) in validationErrors" :key="key">{{ value[0] }}</li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <transition name="slide-fade">
-                      <form v-show="step===1" action="javascript:void(0)" @submit.prevent="next"
-                            :class="{'row': true, 'col-8': true, 'm-auto': true, 'widget-form-font': isWidget}" method="post">
-                        <h2 v-if="!isWidget">Payment details</h2>
+                  <h2 v-show="step===1" class="col widget-step-new" v-if="isWidget">Payment details</h2>
+                  <transition name="slide-fade">
+                    <form v-show="step===1" action="javascript:void(0)" @submit.prevent="next"
+                          :class="{'row': true, 'col-8': true, 'm-auto': true}" method="post">
+                      <div :class="{'widget-form-font': isWidget, 'widget-form': true}">
                         <div v-if="!isDebug" :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
                           <label for="donation_type" class="col-sm-12 control-label">Select donation type</label>
                           <select required name="donation_type" id="donation_type"
@@ -204,128 +205,128 @@
                           <label for="amount" class="col-sm-12 control-label">Enter {{ this.currency }} amount</label>
                           <input type="number" step="0.000000001" name="amount" v-model.number="amount" id="amount" class="form-control"/>
                         </div>
-
-                        <div class="text-center pt-1 mb-5 pb-1">
-                          <button v-show="amount !== null" type="submit" :disabled="processing"
-                                  class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                            {{ processing ? "Please wait" : "Next" }}
-                          </button>
-                          &nbsp;
-                        </div>
-                      </form>
-                    </transition>
-
-
-                    <transition name="slide-fade">
-                      <form v-if="!$store.state.auth.authenticated && this.firstTime && step===2"
-                            action="javascript:void(0)" @submit.prevent="next"
-                            :class="{'row': true, 'col-8': true, 'm-auto': true, 'widget-form-font': isWidget}" method="post">
-                        <h2 v-if="!isWidget">Contact information</h2>
-                        <div :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
-                          <input required type="phone" name="phone" v-model="user.phone" id="phone"
-                                 class="form-control"/>
-                          <label class="form-label" for="phone">Phone</label>
-                        </div>
-
-                        <div :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
-                          <input required type="email" name="email" v-model="user.email" id="email" class="form-control"
-                                 placeholder="example@mail.com"/>
-                          <label class="form-label" for="email">Email</label>
-                        </div>
-
-                        <div class="text-center pt-1 mb-5 pb-1">
-                          <button type="button" @click="prev" :disabled="processing"
-                                  class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                            {{ processing ? "Please wait" : "Back" }}
-                          </button>
-                          &nbsp;
-                          <button type="submit" :disabled="processing"
-                                  class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                            {{ processing ? "Please wait" : "Next" }}
-                          </button>
-                          &nbsp;
-                        </div>
-                      </form>
-                    </transition>
-
-
-                    <transition name="slide-fade">
-                      <form v-show="step===paymentRequisitesStep" action="javascript:void(0)" @submit.prevent="next"
-                            :class="{'row': true, 'col-10': true, 'm-auto': true, 'widget-form-font': isWidget}" method="post">
-                        <h2 v-if="!isWidget">Payment requisites</h2>
-                        <p class="pt-1 donation-description">
-                          Open the mobile banking or payment system application. Transfer {{ amount }} {{ currency }}
-                          to the following payment details ({{this.issuer}}):
-                        </p>
-                        <div :class="{'form-outline': true, 'mb-4': !isWidget, 'requisites-widget-container': isWidget}">
-                          <Requisites v-bind="requisitesProps"></Requisites>
-                        </div>
-
-                        <p class="donation-description">
-                          If needed, you can leave a comment for the payment.
-                          <br/>
-                          <br/>ATTENTION! After making the payment, take a screenshot of the transaction or save the
-                          receipt, then return to the payment form and press the PAY button.
-                        </p>
-                        <div class="text-center pt-1 mb-5 pb-1">
-                          <button type="button" @click="prev" :disabled="processing"
-                                  class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                            {{ processing ? "Please wait" : "Back" }}
-                          </button>
-                          &nbsp;
-                          <button type="submit" :disabled="processing"
-                                  class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                            {{ processing ? "Please wait" : "Next" }}
-                          </button>
-                          &nbsp;
-                        </div>
-                      </form>
-                    </transition>
-
-
-                    <transition name="slide-fade">
-                      <form ref="addImageForm" v-show="step===paymentConfirmationStep" action="javascript:void(0)"
-                            @submit.prevent="pay"
-                            :class="{'row': true, 'col-8': true, 'm-auto': true, 'widget-form-font': isWidget}" method="post">
-                        <h2 v-if="!isWidget">Payment confirmation</h2>
-                        <strong>Attach a receipt confirming the payment:</strong>
-                        <input required type="file" ref="fileupload" class="form-control" v-on:change="onFileChange"/>
-
-                        <div class="text-center pt-1 mb-5 pb-1">
-                          <button type="button" @click="prev" :disabled="processing"
-                                  class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                            {{ processing ? "Please wait" : "Back" }}
-                          </button>
-                          &nbsp;
-                          <button type="submit" :disabled="processing"
-                                  class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                            {{ processing ? "Please wait" : "Pay" }}
-                          </button>
-                          &nbsp;
-                        </div>
-                      </form>
-                    </transition>
-
-
-                    <transition name="slide-fade">
-                      <div v-show="step===paymentThanksStep">
-                        <h2>Thank you for your donation!</h2>
-                        <p v-show="payment_id" :class="{'p-4': !isWidget, 'p-1': isWidget, 'donation-description': true, 'donation-description-mb': !isWidget}">
-                          Your payment id: {{this.payment_id}}
-                          <br/>
-                          Payment details and information about your account have been sent to your email address.
-                        </p>
-                        <div class="text-center pt-1 mb-5 pb-1">
-                          <button :disabled="processing" @click="toAuthorizedPayment"
-                                  class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                            {{ processing ? "Please wait" : "Make another donation" }}
-                          </button>
-                        </div>
                       </div>
-                    </transition>
 
-                  </section>
-                </div>
+                      <div class="text-center pt-1 mb-5 pb-1">
+                        <button v-show="amount !== null" type="submit" :disabled="processing"
+                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                          {{ processing ? "Please wait" : "Next" }}
+                        </button>
+                        &nbsp;
+                      </div>
+                    </form>
+                  </transition>
+
+
+                  <transition name="slide-fade">
+                    <form v-if="!$store.state.auth.authenticated && this.firstTime && step===2"
+                          action="javascript:void(0)" @submit.prevent="next"
+                          :class="{'row': true, 'col-8': true, 'm-auto': true, 'widget-form-font': isWidget}" method="post">
+                      <h2 v-if="!isWidget">Contact information</h2>
+                      <div :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
+                        <input required type="phone" name="phone" v-model="user.phone" id="phone"
+                               class="form-control"/>
+                        <label class="form-label" for="phone">Phone</label>
+                      </div>
+
+                      <div :class="{'form-outline': true, 'mb-4': !isWidget, 'mb-3': isWidget}">
+                        <input required type="email" name="email" v-model="user.email" id="email" class="form-control"
+                               placeholder="example@mail.com"/>
+                        <label class="form-label" for="email">Email</label>
+                      </div>
+
+                      <div class="text-center pt-1 mb-5 pb-1">
+                        <button type="button" @click="prev" :disabled="processing"
+                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                          {{ processing ? "Please wait" : "Back" }}
+                        </button>
+                        &nbsp;
+                        <button type="submit" :disabled="processing"
+                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                          {{ processing ? "Please wait" : "Next" }}
+                        </button>
+                        &nbsp;
+                      </div>
+                    </form>
+                  </transition>
+
+
+                  <transition name="slide-fade">
+                    <form v-show="step===paymentRequisitesStep" action="javascript:void(0)" @submit.prevent="next"
+                          :class="{'row': true, 'col-10': true, 'm-auto': true, 'widget-form-font': isWidget}" method="post">
+                      <h2 v-if="!isWidget">Payment requisites</h2>
+                      <p class="pt-1 donation-description">
+                        Open the mobile banking or payment system application. Transfer {{ amount }} {{ currency }}
+                        to the following payment details ({{this.issuer}}):
+                      </p>
+                      <div :class="{'form-outline': true, 'mb-4': !isWidget, 'requisites-widget-container': isWidget}">
+                        <Requisites v-bind="requisitesProps"></Requisites>
+                      </div>
+
+                      <p class="donation-description">
+                        If needed, you can leave a comment for the payment.
+                        <br/>
+                        <br/>ATTENTION! After making the payment, take a screenshot of the transaction or save the
+                        receipt, then return to the payment form and press the PAY button.
+                      </p>
+                      <div class="text-center pt-1 mb-5 pb-1">
+                        <button type="button" @click="prev" :disabled="processing"
+                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                          {{ processing ? "Please wait" : "Back" }}
+                        </button>
+                        &nbsp;
+                        <button type="submit" :disabled="processing"
+                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                          {{ processing ? "Please wait" : "Next" }}
+                        </button>
+                        &nbsp;
+                      </div>
+                    </form>
+                  </transition>
+
+
+                  <transition name="slide-fade">
+                    <form ref="addImageForm" v-show="step===paymentConfirmationStep" action="javascript:void(0)"
+                          @submit.prevent="pay"
+                          :class="{'row': true, 'col-8': true, 'm-auto': true, 'widget-form-font': isWidget}" method="post">
+                      <h2 v-if="!isWidget">Payment confirmation</h2>
+                      <strong>Attach a receipt confirming the payment:</strong>
+                      <input required type="file" ref="fileupload" class="form-control" v-on:change="onFileChange"/>
+
+                      <div class="text-center pt-1 mb-5 pb-1">
+                        <button type="button" @click="prev" :disabled="processing"
+                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                          {{ processing ? "Please wait" : "Back" }}
+                        </button>
+                        &nbsp;
+                        <button type="submit" :disabled="processing"
+                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                          {{ processing ? "Please wait" : "Pay" }}
+                        </button>
+                        &nbsp;
+                      </div>
+                    </form>
+                  </transition>
+
+
+                  <transition name="slide-fade">
+                    <div v-show="step===paymentThanksStep">
+                      <h2>Thank you for your donation!</h2>
+                      <p v-show="payment_id" :class="{'p-4': !isWidget, 'p-1': isWidget, 'donation-description': true, 'donation-description-mb': !isWidget}">
+                        Your payment id: {{this.payment_id}}
+                        <br/>
+                        Payment details and information about your account have been sent to your email address.
+                      </p>
+                      <div class="text-center pt-1 mb-5 pb-1">
+                        <button :disabled="processing" @click="toAuthorizedPayment"
+                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                          {{ processing ? "Please wait" : "Make another donation" }}
+                        </button>
+                      </div>
+                    </div>
+                  </transition>
+
+                </section>
               </div>
             </div>
           </div>
@@ -744,8 +745,9 @@ export default {
     let isWidget = this.$route.query.widget
     let isDebug = this.$route.query.debug
 
+    document.getElementById('custom-body').style.background = 'url("images/back.png") 100% 100%';
+
     if (isWidget === undefined) {
-      document.getElementById('custom-body').style.backgroundColor = '#eee';
       this.isWidget = false
     }
 
@@ -769,15 +771,14 @@ export default {
 </script>
 
 <style lang="scss">
+.card {
+
+}
+
 .gradient-custom-2 {
-  /* fallback for old browsers */
-  background: #fccb90;
-
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-linear-gradient(to right, #DD7C45, #DD7C45, #D76546, #D76546);
-
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: linear-gradient(to right, #DD7C45, #DD7C45, #D76546, #D76546);
+  /**
+   *
+   */
 }
 
 .widget-logo-container {
@@ -888,12 +889,10 @@ $color-jungle: #193805;
 $font-montserrat: "Montserrat", sans-serif;
 $font-weight-bold: 700;
 
-
 .logo .text-logo.mini-margin-top {
   margin-top: -0.2em;
   font-size: 0.5em;
 }
-
 
 .pen-description {
   display: flex;
@@ -929,7 +928,7 @@ $font-weight-bold: 700;
 .section-form {
   h2 {
     text-align: center;
-    color: rgba(121, 113, 113, 0.99);
+    color: black;
     line-height: 1.2;
     font-weight: 500;
     font-size: 34px;
@@ -950,7 +949,13 @@ $font-weight-bold: 700;
       position: absolute;
       height: 2px;
       top: calc(50% - 1px);
-      background: $color-gray;
+      background: repeating-linear-gradient(
+        to right,
+        transparent,
+        transparent 2px,
+        black 5px,
+        black 5px
+      );
       width: calc(100% - 20px);
     }
 
@@ -1022,6 +1027,46 @@ span[class^="dot-"] {
 
 .dot-three {
   animation: dot-three 2s infinite linear
+}
+
+.card-background {
+  background: none;
+}
+
+.widget-form {
+  background: #ff5b03;
+  opacity: 0.9;
+  border-radius: 20px;
+  padding: 2em;
+
+  .form-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('images/angle_arrow_2.png'), url('images/back.png'); /* Два фона */
+    background-repeat: no-repeat, repeat; /* Отключаем повторение фона для изображения стрелки */
+    background-position: right 0.75em center, 0 0; /* Позиция изображения стрелки и фона */
+    background-size: 15px auto, auto; /* Размер изображения стрелки и фона */
+    border: 1px solid #ccc;
+    padding: 5px 30px 5px 10px;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+  }
+}
+
+.button-support {
+  background: #e76912;
+  color: #ffeadc;
+  font-size: 1em;
+}
+
+h2.widget-step-new {
+  border: 0.1em solid #ff5b03;
+  padding: 0.5em;
+  border-radius: 20px;
+  color: black;
+  font-size: 1em;
 }
 
 @keyframes dot-one {

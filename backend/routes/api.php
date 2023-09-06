@@ -28,3 +28,4 @@ Route::post('/payment', [\App\Http\Controllers\PaymentController::class, 'pay'])
     ->middleware('auth:sanctum');
 
 Route::get('/convert', [\App\Http\Controllers\CurrencyController::class, 'convert']);
+Route::get('/mail', [\App\Http\Controllers\MailController::class, 'mail']);
