@@ -13,7 +13,7 @@
               <h2 v-show="step===paymentRequisitesStep" class="col widget-step-name" v-if="isWidget">Payment requisites</h2>
               <h2 v-show="step===paymentConfirmationStep" class="col widget-step-name" v-if="isWidget">Payment confirmation</h2>
               --><div :class="{'col': isWidget}">
-                  <img :src="asset('images/logo3.png')"
+                  <img :src="asset('/images/logo3.png')"
                        :class="{'widget-logo': isWidget, 'usual-logo': !isWidget, 'col': true}" alt="logo">
                   <!--<h4 class="mt-1 mb-5 pb-1">Payment</h4>-->
                 </div>
@@ -644,7 +644,7 @@ export default {
       }
     },
     requisitesProps: function () {
-      let qrAssetDemo = this.asset('images/1.png')
+      let qrAssetDemo = this.asset('/images/1.png')
       let data = null;
 
       switch (this.issuer) {
@@ -854,7 +854,7 @@ export default {
     let isWidget = this.$route.query.widget
     let isDebug = this.$route.query.debug
 
-    document.getElementById('custom-body').style.background = 'url("images/back.png") left top';
+    document.getElementById('custom-body').style.background = 'url("/images/back.png") left top';
     document.getElementById('custom-body').style.backgroundSize = '50%';
 
     if (isWidget === undefined) {
@@ -1272,7 +1272,7 @@ span[class^="dot-"] {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-image: url('images/angle_arrow_2.png'), url('images/back.png'); /* Два фона */
+    background-image: url('/images/angle_arrow_2.png'), url('/images/back.png'); /* Два фона */
     background-repeat: no-repeat, repeat; /* Отключаем повторение фона для изображения стрелки */
     background-position: right 0.75em center, 0 0; /* Позиция изображения стрелки и фона */
     background-size: 15px auto, auto; /* Размер изображения стрелки и фона */
@@ -1284,7 +1284,7 @@ span[class^="dot-"] {
   }
 
   input {
-    background-image: url('images/back.png'); /* Два фона */
+    background-image: url('/images/back.png'); /* Два фона */
     background-repeat: repeat; /* Отключаем повторение фона для изображения стрелки */
     background-position: 0 0; /* Позиция изображения стрелки и фона */
     background-size: auto; /* Размер изображения стрелки и фона */
@@ -1316,7 +1316,7 @@ span[class^="dot-"] {
   right: 0.8em;
   top: 2.1em;
   content: '';
-  background: url('images/arrow-next.png') no-repeat center center/cover;
+  background: url('/images/arrow-next.png') no-repeat center center/cover;
   padding-right: 1.5em;
   padding-bottom: 1.5em;
 }
@@ -1340,7 +1340,7 @@ span[class^="dot-"] {
   right: 0.8em;
   top: 2.1em;
   content: '';
-  background: url('images/arrow-yellow.png') no-repeat center center/cover;
+  background: url('/images/arrow-yellow.png') no-repeat center center/cover;
   padding-right: 1.5em;
   padding-bottom: 1.5em;
 }
@@ -1365,7 +1365,7 @@ span[class^="dot-"] {
   right: 0.8em;
   top: 2.1em;
   content: '';
-  background: url('images/arrow-yellow.png') no-repeat center center/cover;
+  background: url('/images/arrow-yellow.png') no-repeat center center/cover;
   padding-right: 1.5em;
   padding-bottom: 1.5em;
 }

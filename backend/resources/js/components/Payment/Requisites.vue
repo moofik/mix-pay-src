@@ -146,7 +146,7 @@ p:last-child {
 .donation-description-1::after {
   position: absolute;
   color: #ffeadc;
-  background-image: url("images/icon1.png");
+  background-image: url("/images/icon1.png");
   background-position: center;
   background-size: 3.3em 3.3em;
   background-repeat: no-repeat;
@@ -200,7 +200,7 @@ p:last-child {
 .donation-description-3::after {
   position: absolute;
   color: #ffeadc;
-  background-image: url("images/icon2.png");
+  background-image: url("/images/icon2.png");
   background-position: center;
   background-size: 3.3em 3.3em;
   background-repeat: no-repeat;
@@ -246,7 +246,7 @@ p:last-child {
   .donation-description-1::after {
     position: absolute;
     color: #ffeadc;
-    background-image: url("images/icon1.png");
+    background-image: url("/images/icon1.png");
     background-position: center;
     background-size: 3.3em 3.3em;
     background-repeat: no-repeat;
@@ -275,7 +275,7 @@ p:last-child {
   .donation-description-3::after {
     position: absolute;
     color: #ffeadc;
-    background-image: url("images/icon2.png");
+    background-image: url("/images/icon2.png");
     background-position: center;
     background-size: 3.3em 3.3em;
     background-repeat: no-repeat;
@@ -306,7 +306,7 @@ p:last-child {
   .donation-description-1::after {
     position: absolute;
     color: #ffeadc;
-    background-image: url("images/icon1.png");
+    background-image: url("/images/icon1.png");
     background-position: center;
     background-size: 3.3em 3.3em;
     background-repeat: no-repeat;
@@ -335,7 +335,7 @@ p:last-child {
   .donation-description-3::after {
     position: absolute;
     color: #ffeadc;
-    background-image: url("images/icon2.png");
+    background-image: url("/images/icon2.png");
     background-position: center;
     background-size: 3.3em 3.3em;
     background-repeat: no-repeat;
@@ -366,7 +366,7 @@ p:last-child {
   .donation-description-1::after {
     position: absolute;
     color: #ffeadc;
-    background-image: url("images/icon1.png");
+    background-image: url("/images/icon1.png");
     background-position: center;
     background-size: 3.3em 3.3em;
     background-repeat: no-repeat;
@@ -395,7 +395,7 @@ p:last-child {
   .donation-description-3::after {
     position: absolute;
     color: #ffeadc;
-    background-image: url("images/icon2.png");
+    background-image: url("/images/icon2.png");
     background-position: center;
     background-size: 3.3em 3.3em;
     background-repeat: no-repeat;
@@ -427,7 +427,7 @@ p:last-child {
   .donation-description-1::after {
     position: absolute;
     color: #ffeadc;
-    background-image: url("images/icon1.png");
+    background-image: url("/images/icon1.png");
     background-position: center;
     background-size: 3.3em 3.3em;
     background-repeat: no-repeat;
@@ -456,7 +456,7 @@ p:last-child {
   .donation-description-3::after {
     position: absolute;
     color: #ffeadc;
-    background-image: url("images/icon2.png");
+    background-image: url("/images/icon2.png");
     background-position: center;
     background-size: 3.3em 3.3em;
     background-repeat: no-repeat;
@@ -487,7 +487,7 @@ p:last-child {
   .donation-description-1::after {
     position: absolute;
     color: #ffeadc;
-    background-image: url("images/icon1.png");
+    background-image: url("/images/icon1.png");
     background-position: center;
     background-size: 3.3em 3.3em;
     background-repeat: no-repeat;
@@ -516,7 +516,7 @@ p:last-child {
   .donation-description-3::after {
     position: absolute;
     color: #ffeadc;
-    background-image: url("images/icon2.png");
+    background-image: url("/images/icon2.png");
     background-position: center;
     background-size: 3.3em 3.3em;
     background-repeat: no-repeat;
