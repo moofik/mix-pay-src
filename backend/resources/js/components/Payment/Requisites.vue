@@ -300,7 +300,7 @@ p:last-child {
     border-radius: 10em;
     content: '';
     left: -2.8em;
-    top: 1.6em;
+    top: 0.8em;
   }
 
   .donation-description-1::after {
@@ -316,7 +316,7 @@ p:last-child {
     border-radius: 3em;
     content: '';
     left: -1.6em;
-    top: 2.4em;
+    top: 1.6em;
   }
 
   .donation-description-3::before {
