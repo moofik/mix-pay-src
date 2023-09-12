@@ -229,7 +229,7 @@ p:last-child {
 }
 
 
-@media (min-width: 440px) and (max-width: 540px) {
+@media (min-width: 420px) and (max-width: 540px) {
   .donation-description-1::before {
     position: absolute;
     color: #ffeadc;
